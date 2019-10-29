@@ -109,7 +109,7 @@ app.post('/signup', function (req, res) {
     arrCount = a.arrSL;
     console.log(a);
     console.log(a.nameCustomer);
-     var date = new Date("dd/MM/yyyy");
+     var date = new Date();
     console.log(date);
     var keyorder = a.order;
     let j =0; 

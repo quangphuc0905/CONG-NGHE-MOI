@@ -1,0 +1,52 @@
+[
+    {
+        "idProduct" : 1,
+        "nameProduct" : "Áo-sơ-mi",
+        "idSupplier": 1,
+        "nameSupplier" : "amazon",
+        "idCategory" : 1,
+        "price" : 100000,
+        "images" : "https://i.pinimg.com/236x/a9/b1/97/a9b197dcc832ddc652c30c644b5a2381--funny-phone-wallpaper-iphone-wallpaper-whale.jpg",
+        "description": "áo siêu đẹp"
+    },
+    {
+        "idProduct" : 2,
+        "nameProduct" : "Áo-thun",
+        "idSupplier": 1,
+        "nameSupplier" : "sendo",
+        "idCategory" : 1,
+        "price" : 100000,
+        "images" : "https://i.pinimg.com/236x/a9/b1/97/a9b197dcc832ddc652c30c644b5a2381--funny-phone-wallpaper-iphone-wallpaper-whale.jpg",
+        "description": "áo siêu đẹp"
+    },
+    {
+        "idProduct" : 3,
+        "nameProduct" : "Giày adidas",
+        "idSupplier": 1,
+        "nameSupplier" : "shopee",
+        "idCategory" : 1,
+        "price" : 100000,
+        "images" : "https://i.pinimg.com/236x/a9/b1/97/a9b197dcc832ddc652c30c644b5a2381--funny-phone-wallpaper-iphone-wallpaper-whale.jpg",
+        "description": "áo siêu đẹp"
+    },
+    {
+        "idProduct" : 4,
+        "nameProduct" : "Quần kaki",
+        "idSupplier": 1,
+        "nameSupplier" : "amazon",
+        "idCategory" : 1,
+        "price" : 200000,
+        "images" : "https://i.pinimg.com/236x/a9/b1/97/a9b197dcc832ddc652c30c644b5a2381--funny-phone-wallpaper-iphone-wallpaper-whale.jpg",
+        "description": "áo siêu đẹp"
+    },
+    {
+        "idProduct" : 5,
+        "nameProduct" : "Lap top",
+        "idSupplier": 2,
+        "nameSupplier" : "tiki",
+        "idCategory" : 3,
+        "price" : 100000,
+        "images" : "https://i.pinimg.com/236x/a9/b1/97/a9b197dcc832ddc652c30c644b5a2381--funny-phone-wallpaper-iphone-wallpaper-whale.jpg",
+        "description": "áo siêu đẹp"
+    }
+]

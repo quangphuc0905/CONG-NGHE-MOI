@@ -1,0 +1,28 @@
+[
+    {
+        "order": 1,
+        "status": "Đang xử lý",
+        "idProduct" :2,
+        "idSupplier":1,
+        "idCustomer": 1,
+        "idOrder":1,
+        "quantity":2,
+        "nameCustomer":"quang phuc",
+        "addressShip": "duong quang ham",
+        "numberPhoneCus": "131453135",
+        "orderDate":"22/12/2012"
+    },
+    {
+        "order": 2,
+        "status": "Đang xử lý",
+        "idProduct" :4,
+        "idSupplier":1,
+        "idCustomer": 1,
+        "idOrder":1,
+        "quantity":1,
+        "nameCustomer":"quang phuc",
+        "addressShip": "duong quang ham",
+        "numberPhoneCus": "131453135",
+        "orderDate":"22/12/2012"
+    }
+]

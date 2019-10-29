@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        
+        <!-- Latest compiled and minified CSS & JS -->
+        <link rel="stylesheet" media="screen" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <script src="//code.jquery.com/jquery.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        
+    </head>
+    <body>
+        <!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {box-sizing: border-box}
+
+/* Set height of body and the document to 100% */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+
+/* Style tab links */
+.tablink {
+  background-color: #333333;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 25%;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: black;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+table, th, td {
+  border: 2px solid black;
+}
+</style>
+</head>
+<body>
+<div style="height: 50px; width: 100%; background-color: #333333;">
+<button class="tablink" onclick="openPage('Home', this, '#222222')" id="defaultOpen" style="height: 50px;" >Quản lý sản phẩm</button>
+<button class="tablink" onclick="openPage('News', this, '#222222')" style="height: 50px;">Quản lý đơn hàng</button>
+
+<a href="/logout" style="float: right; font-size: 16px; margin-right: 25px; margin-top: 15px; color: white;">Đăng xuất</a>
+
+  <a style="float: right; font-size: 16px; margin-right: 25px; margin-top: 15px; color: white;">Chào <%=uname%></a>
+  
+
+</div>
+<!--Quan ly san pham ----------------------------------------->
+<div id="Home" class="tabcontent">
+  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="margin-left: 15%;">
+  
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background-color:#333333;">
+    <h4 style=" color: white;" class="col-md-8">DANH SÁCH SẢN PHẨM</h4>
+    <button class="btn btn-primary col-md-4" data-toggle="modal" data-target="#modalRegisterForm" style="margin-top: 3px;">Thêm sản phẩm</button>
+  </div>
+  
+    
+  <table class="table table-bordered table-hover">
+      <thead>
+          <tr>
+              <th>STT</th>
+              <th>MÃ SẢN PHẨM</th>
+              <th>TÊN SẢN PHẨM</th>
+              <th>LOẠI SẢN PHẨM</th>
+              <th>GIÁ SẢN PHẨM</th>
+              <th></th>
+          </tr>
+      </thead>
+      <tbody>
+        <%var stt = 0%>
+          <% for (var i = 0; i < obj.length; i++) { %>
+            <%if(obj[i].idSupplier==supp[0].idSupplier){%>
+          <tr>
+              <td><%=stt=stt+1%></td>
+              <td><%=obj[i].idProduct%></td>
+              <td><%=obj[i].nameProduct%></td>
+              <% for (var j = 0; j < cate.length; j++) { %>
+                <%if(obj[i].idCategory==cate[j].idCategory){%>
+                  <td><%=cate[j].nameCategory%></td>
+              <%}%>
+              <%}%>
+              <td><%=obj[i].price%></td>
+              <td><a href="#" class="chinhsua" style="margin-right: 15px; " data-toggle="modal" data-target="#modalRegisterFormUP" data-idp="<%=obj[i].idProduct%>" data-namep="<%=obj[i].nameProduct%>" data-idc="<%=obj[i].idCategory%>" data-price="<%=obj[i].price%>"
+                data-img="<%=obj[i].images%>" data-des="<%=obj[i].description%>">Chỉnh sửa</a>
+                <% var tontai = 0%>
+                <% for (var k = 0; k < order.length; k++) { %>
+                  <%if(order[k].idProduct==obj[i].idProduct){%>
+                    <%tontai ++%>
+                    <%}%>
+                <%}%>
+                <%if(tontai==0){%>
+                <a href="/supplier/delete?idProduct=<%=obj[i].idProduct%>&nameProduct=<%=obj[i].nameProduct%>">Xóa</a>
+                <%}%>
+                <%if(tontai!=0){%>
+                  <a href="" data-toggle="modal" data-target="#myModal">Xóa</a>
+                  <%}%>
+              </td>
+          </tr>
+          <%}%>
+          <% } %>
+      </tbody>
+  </table>
+
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Thông báo</h4>
+        </div>
+        <div class="modal-body">
+          <p>Sản phẩm đã được đặt hàng, không thể xóa</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Quan ly don hang ----------------------------------------->
+<div id="News" class="tabcontent">
+    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="margin-left: 15%;">
+  
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background-color:#333333;">
+          <h4 style=" color: white;" class="col-md-8">DANH SÁCH ĐƠN HÀNG</h4>
+        </div>
+        
+          
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>MÃ ĐƠN HÀNG</th>
+                    <th>NGÀY ĐẶT</th>
+                    <th>TRẠNG THÁI</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <%var stt = 0%>
+                <%var sttid = {}%>
+                <% for (var k = 0; k < order.length-1; k++) { %>
+                  <% for (var i = k+1; i < order.length; i++) { %>
+                      <%if(order[k].idOrder<= order[i].idOrder){%>
+                        <% sttid = order[k];%>
+                        <% order[k] = order[i];%>
+                        <% order[i] = sttid;%>
+                        <% } %>
+                <% } %>
+                <% } %>
+                  <% for (var i = 0; i < order.length; i++) { %>
+                  <%if(order[i].idSupplier==supp[0].idSupplier){%>
+                <tr>
+                    <td><%=stt=stt+1%></td>
+                    <td><%=order[i].idOrder%></td>
+                    <td><%=order[i].orderDate%></td>
+                    <td><%=order[i].status%></td>
+                    <% for (var t = 0; t < obj.length; t++) { %>
+                      <%if(order[i].idProduct==obj[t].idProduct){%>
+                    <td><a href="" class="submitdonhang" data-idorder="<%=order[i].idOrder%>" data-order="<%=order[i].order%>" data-namep="<%=obj[t].nameProduct%>" data-quantity="<%=order[i].quantity%>"
+                      data-namc="<%=order[i].nameCustomer%>" data-sdt="<%=order[i].numberPhoneCus%>" 
+                      data-addr="<%=order[i].addressShip%>" data-status="<%=order[i].status%>" 
+                      data-orderd="<%=order[i].orderDate%>" data-toggle="modal" data-target="#modalDetailOrder" >Xem chi tiết</a></td>
+                      <% break; %>
+                      <% } %>
+                <% } %>
+                </tr>
+                <% } %>
+                <% } %>
+              
+            </tbody>
+        </table>
+
+        <div>
+          
+              <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                  
+              </div>
+              
+          </div>
+          
+      </div>
+</div>
+<!--modal them san pham-->
+<div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Thêm sản phẩm</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/supplier/create" method="POST">
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+            <label data-error="wrong" data-success="right" for="orangeForm-name">Tên sản phẩm</label>
+          <input type="text" id="orangeForm-name" name="nameProduct" class="form-control validate" required="required">
+        </div>
+        <div class="md-form mb-4">
+            <label data-error="wrong" data-success="right" for="orangeForm-email">Loại sản phẩm</label>
+
+                <select class="form-control" name="idCategory" id="sel1">
+                    <% for (var i = 0; i < cate.length; i++) { %>
+                      <option value="<%=cate[i].idCategory%>"><%=cate[i].nameCategory%></option>
+                     <% } %>
+                </select>
+        </div>
+        <div class="md-form mb-5">
+            <label data-error="wrong" data-success="right" for="orangeForm-email">Giá</label>
+
+          <input type="number" id="orangeForm-email" name="price" class="form-control validate" required="required">
+        </div>
+        <div class="md-form mb-5">
+            <label data-error="wrong" data-success="right" for="orangeForm-email">Hình ảnh</label>
+
+                <input type="text" id="orangeForm-email" name="images" class="form-control validate" required="required">
+         </div>
+
+         <%var max = obj[0].idProduct%>
+         <% for (var i = 1; i < obj.length; i++) { %>
+              <%if(max < obj[i].idProduct){%>
+                <%max = obj[i].idProduct;%>
+              <% } %>
+          <% } %>
+         <div class="md-form mb-5" style="display: none;">
+            <input type="text" id="orangeForm-email" value="<%=max+1%>" name="idProduct" class="form-control validate" >
+            <label data-error="wrong" data-success="right" for="orangeForm-email">IdProduct</label>
+     </div>
+
+    <div class="md-form mb-5" style="display: none;">
+        <input type="text" id="orangeForm-email" name="idSupplier" value="<%=supp[0].idSupplier%>" class="form-control validate">
+        <label data-error="wrong" data-success="right" for="orangeForm-email">IdSupplier</label>
+    </div>
+    <div class="md-form mb-5" style="display: none;">
+        <input type="text" id="orangeForm-email" name="nameSupplier" value="<%=supp[0].nameSupplier%>" class="form-control validate">
+        <label data-error="wrong" data-success="right" for="orangeForm-email">nameSupplier</label>
+    </div>
+    <div class="md-form mb-5">
+        <label data-error="wrong" data-success="right" for="orangeForm-email">Description</label>
+      <input type="text" id="orangeForm-email" name="description" class="form-control validate" required="required">
+  </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+          <input class="btn btn-primary" type="submit" value="Thêm">
+        </div>
+    </form>
+      
+    </div>
+  </div>
+</div>
+<!--modal chinh sua san pham-->
+<div class="modal fade" id="modalRegisterFormUP" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Chỉnh sửa sản phẩm</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/supplier/save" method="POST">
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+            <label data-error="wrong" data-success="right" for="orangeForm-name">Tên sản phẩm</label>
+          <input type="text" id="namep" name="nameProduct" class="form-control validate" required="required" readonly>
+        </div>
+        <div class="md-form mb-4" style="display: none;">
+                <select class="form-control" name="idCategory" id="sel1">
+                      <option id="idc"></option>
+                </select>
+            <label data-error="wrong" data-success="right" for="orangeForm-email">Loại sản phẩm</label>
+        </div>
+        <div class="md-form mb-5">
+            <label data-error="wrong" data-success="right" for="orangeForm-email">Giá</label>
+
+          <input type="number" id="price" name="price" class="form-control validate" required="required">
+        </div>
+        <div class="md-form mb-5">
+            <label data-error="wrong" data-success="right" for="orangeForm-email">Hình ảnh</label>
+
+                <input type="text" id="img" name="images" class="form-control validate" required="required">
+         </div>
+
+         <div class="md-form mb-5" style="display: none;">
+            <label data-error="wrong" data-success="right" for="orangeForm-email">IdProduct</label>
+
+            <input type="text" id="idp" name="idProduct" class="form-control validate" >
+     </div>
+
+    <div class="md-form mb-5" style="display: none;">
+        <input type="text" id="ids" name="idSupplier" value="<%=supp[0].idSupplier%>" class="form-control validate">
+        <label data-error="wrong" data-success="right" for="orangeForm-email">IdSupplier</label>
+    </div>
+    <div class="md-form mb-5" style="display: none;">
+        <input type="text" id="names" name="nameSupplier" value="<%=supp[0].nameSupplier%>" class="form-control validate">
+        <label data-error="wrong" data-success="right" for="orangeForm-email">nameSupplier</label>
+    </div>
+    <div class="md-form mb-5">
+        <label data-error="wrong" data-success="right" for="orangeForm-email">Description</label>
+
+      <input type="text" id="des" name="description" class="form-control validate" required="required">
+  </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+          <input class="btn btn-primary" type="submit" value="Cập nhật">
+        </div>
+    </form>
+      
+    </div>
+  </div>
+</div>
+
+<!--modal xem chi tiet don hang-->
+<div class="modal fade" id="modalDetailOrder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Chi tiết đơn hàng</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/supplier/update" method="POST">
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5" style="display: none;">
+          <label data-error="wrong" data-success="right" for="orangeForm-name">order</label>
+          <input type="text" id="order" name="order" class="form-control validate" required="required" readonly>
+        </div>
+        <div class="md-form mb-5" style="display: none;">
+          <label data-error="wrong" data-success="right" for="orangeForm-name">idProduct</label>
+          <input type="text" id="idproduct" name="idProduct" class="form-control validate" required="required" readonly>
+        </div>
+        <div class="md-form mb-5" style="display: none;">
+          <label data-error="wrong" data-success="right" for="orangeForm-name">idSupplier</label>
+          <input type="text" id="idsupplier" name="idSupplier" class="form-control validate" required="required" readonly>
+        </div>
+        <div class="md-form mb-5" style="display: none;">
+          <label data-error="wrong" data-success="right" for="orangeForm-name">idSupplier</label>
+          <input type="text" id="idcustomer" name="idCustomer" class="form-control validate" required="required" readonly>
+        </div>
+        <div class="md-form mb-5">
+            <div class="md-form mb-5" style="display: none;">
+                <label data-error="wrong" data-success="right" for="orangeForm-name">idSupplier</label>
+                <input type="text" id="idorder" name="idOrder" class="form-control validate" required="required" readonly>
+          </div>
+            <label data-error="wrong" data-success="right" for="orangeForm-email">Tên sản phẩm</label>
+          <input type="text" id="tensanpham" value="" class="form-control validate" readonly>
+      </div>
+        <div class="md-form mb-5">
+            <label data-error="wrong" data-success="right" for="orangeForm-email">Số lượng</label>
+          <input type="number" id="soluongsanpham" name="quantity" class="form-control validate" required="required" readonly>
+        </div>
+        <div class="md-form mb-5">
+            <label data-error="wrong" data-success="right" for="orangeForm-email">Tên khách hàng</label>
+                <input type="text" id="tenkhachhang" name="nameCustomer" class="form-control validate" required="required" readonly>
+         </div>
+
+         <div class="md-form mb-5">
+            <label data-error="wrong" data-success="right" for="orangeForm-email">Số điện thoại</label>
+            <input type="text" id="sodienthoai" name="numberPhoneCus" class="form-control validate" readonly>
+     </div>
+
+    <div class="md-form mb-5">
+        <label data-error="wrong" data-success="right" for="orangeForm-email">Địa chỉ</label>
+        <input type="text" id="diachi" name="addressShip" value="" class="form-control validate" readonly>
+    </div>
+    
+    <div class="md-form mb-4">
+        <label data-error="wrong" data-success="right" for="orangeForm-email">Trạng thái</label>
+        <input type="text" id="trangthai" name="status" value="" class="form-control validate">
+
+</div>
+    <div class="md-form mb-5">
+        <label data-error="wrong" data-success="right" for="orangeForm-email">Ngày đặt</label>
+      <input type="text" id="ngaydat" name="orderDate" class="form-control validate" required="required" readonly>
+  </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+          <input class="btn btn-primary" type="submit" value="Cập nhật">
+        </div>
+    </form>
+      
+    </div>
+  </div>
+</div>
+<script>
+    $('.submitdonhang').click(function(event) {
+  document.getElementById('order').value = $(this).data('order');
+      // document.getElementById('idproduct').value = $(this).data('namep');
+      // document.getElementById('idsupplier').value = $(this).data('namep');
+  document.getElementById('idorder').value = $(this).data('idorder');
+  document.getElementById('tensanpham').value = $(this).data('namep');
+  document.getElementById('soluongsanpham').value = $(this).data('quantity');
+  document.getElementById('tenkhachhang').value = $(this).data('namc');
+  document.getElementById('sodienthoai').value = $(this).data('sdt');
+  document.getElementById('diachi').value = $(this).data('addr');
+  document.getElementById('trangthai').value = $(this).data('status');
+  document.getElementById('ngaydat').value = $(this).data('orderd');
+  console.log("chinh sua");
+});
+  $('.chinhsua').click(function(event) {
+  document.getElementById('idp').value = $(this).data('idp');
+  document.getElementById('namep').value = $(this).data('namep');
+  document.getElementById('idc').value = $(this).data('idc');
+  document.getElementById('price').value = $(this).data('price');
+  document.getElementById('img').value = $(this).data('img');
+  document.getElementById('des').value = $(this).data('des');
+  console.log("chinh sua");
+});
+
+function openPage(pageName,elmnt,color) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+  document.getElementById(pageName).style.display = "block";
+  elmnt.style.backgroundColor = color;
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+   
+</body>
+</html> 

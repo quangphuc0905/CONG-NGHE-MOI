@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+	<title>Divisima | eCommerce</title>
+	<meta charset="UTF-8">
+	<meta name="description" content=" Divisima | eCommerce Template">
+	<meta name="keywords" content="divisima, eCommerce, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	<link href="img/favicon.ico" rel="shortcut icon"/>
+
+	<!-- Google Font -->
+	<!-- <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet"> -->
+
+
+	<!-- Stylesheets -->
+     <link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="css/flaticon.css"/>
+	<link rel="stylesheet" href="css/slicknav.min.css"/>
+	<link rel="stylesheet" href="css/jquery-ui.min.css"/>
+	<link rel="stylesheet" href="css/owl.carousel.min.css"/>
+	<link rel="stylesheet" href="css/animate.css"/>
+	<link rel="stylesheet" href="css/style.css"/>
+
+
+</head>
+<body>
+
+    <header class="header-section">
+		<div class="header-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-2 text-center text-lg-left">
+						<!-- logo -->
+						<a href="/" class="site-logo">
+							<img src="images/logo.png" alt="">
+						</a>
+					</div>
+					<div class="col-xl-6 col-lg-5">
+						<form class="header-search-form" action="/search" method="POST">
+							<input type="text" name="nameProduct" placeholder="Search on divisima ....">
+							<button type="submit"><i class="flaticon-search"></i></button>
+						</form>
+					</div>
+					<div class="col-xl-4 col-lg-5">
+						<div class="user-panel">
+							 <div class="up-item">
+								<i class="flaticon-profile"></i>
+								<% if(!uname) { %>
+									<a href="" data-toggle="modal" data-target="#modalLoginForm">Sign In</a>  or <a href="#" data-toggle="modal" data-target="#modalRegisterForm">Create Account</a>
+									<% } else { %>
+									  <a href="#" style="margin-right: 25px; font-weight: bold;"><%= uname %></a> <a href="/logout">Đăng xuất</a>
+									  <% } %>         
+                            </div> 
+                           
+							<div class="up-item">
+								<div class="shopping-card">
+									<i class="flaticon-bag"></i>
+									<span id="soluong" class="total-count"></span>
+								</div>
+                <a href="#" data-toggle="modal" data-target="#cart">Cart</a>
+                <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cart">Cart (<span class="total-count"></span>)</button> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<nav class="main-navbar">
+			<div class="container">
+				<!-- menu -->
+				<ul class="main-menu">
+						<li><a href="/">Trang chủ</a></li>
+						<% for (var i = 0; i < cate.length; i++) { %>
+							<li><a href="/"><%=cate[i].nameCategory%></a></li>
+							<% } %>
+				</ul>
+			</div>
+		</nav>
+    </header>
+    <!--modal dang nhap-->
+    <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/signin" method="POST">
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="email" id="defaultForm-email" name="Username" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label>
+        </div>
+
+        <div class="md-form mb-4">
+          <input type="password" id="defaultForm-pass" name="Pass" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>
+        </div>
+      
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary">Login</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+<!--modal dang ky-->
+<div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Sign up</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="orangeForm-name" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="orangeForm-name">Your name</label>
+        </div>
+        <div class="md-form mb-5">
+          <input type="email" id="orangeForm-email" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="orangeForm-email">Your email</label>
+        </div>
+
+        <div class="md-form mb-4">
+          <input type="password" id="orangeForm-pass" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="orangeForm-pass">Your password</label>
+        </div>
+
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button class="btn btn-primary">Sign up</button>
+      </div>
+    </div>
+  </div>
+</div>
+        <!--modal cart-->
+       
+        <!-- Page info -->
+	<div class="page-top-info">
+		<div class="container">
+			<h4>Your cart</h4>
+			<div class="site-pagination">
+				<a href="/">Home</a> /
+				<a href="/checkout">Your cart</a>
+			</div>
+		</div>
+    </div>
+    <!-- checkout section  -->
+	<section class="checkout-section spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 order-2 order-lg-1">
+						<%var max = 1%>
+						<% for (var i = 0; i < order.length; i++) { %>
+							 <%if(max < order[i].order){%>
+							   <%max = order[i].order%>
+							 <% } %>
+						 <% } %>
+						 <%var maxid = 1%>
+						<% for (var i = 0; i < order.length; i++) { %>
+							 <%if(maxid < order[i].idOrder){%>
+							   <%maxid = order[i].idOrder%>
+							 <% } %>
+						 <% } %>
+					<form class="checkout-form">
+						<div class="cf-title">Billing Address</div>
+						
+						<div class="row address-inputs">
+							<div class="col-md-12" style="float: right;">
+									<% for (var i = 0; i < khs.length; i++) { %>
+										<%if(uname == khs[i].username){%>
+										  <% var id = khs[i].idCustomer;%>
+										  <% var nameC = khs[i].nameCustomer;%>
+										  <% var addr = khs[i].address;%>
+										  <% var number = khs[i].numberPhone;%>
+										<% } %>
+									<% } %>
+								<input type="text" id="order" value="<%=max+1%>" name="order" style="display: none;">
+								<input type="text" id="idorder" value="<%=maxid+1%>" name="idOrder" style="display: none;">
+								<input type="text" id="idcustomer" value="<%=id%>" name="idCustomer" style="display: none;">
+								<input id="nameCustomer" type="text" value="<%=nameC%>" name="nameCustomer" placeholder="Họ và tên" readonly="readonly">
+								<input id="addressShip" type="text" value="<%=addr%>"  name="addressShip" placeholder="Địa chỉ nhận hàng" required>
+								<input id="numberPhoneCus" type="text" value="<%=number%>"  name="numberPhoneCus" placeholder="Số điện thoại" required>
+							</div>
+							
+						</div>
+					
+						<div class="cf-title">Payment</div>
+						<ul class="payment-list">
+							<!-- <li>Paypal<a href="#"><input name="aa" type="radio"/></a></li> -->
+							<li>Thanh toán khi nhận hàng <input name="aa" type="radio"/></li>
+						</ul>
+						<button id="submitcheckout" class="site-btn submit-order-btn" data-toggle="modal" data-target="#myModal">Thanh Toán</button>
+					</form>
+				</div>
+				<div class="col-lg-4 order-1 order-lg-2">
+					<div class="checkout-cart">
+						<h3>Your Cart</h3>
+						<ul class="product-list" id="sanpham">
+							
+							<!--san pham here-->
+						</ul>
+						<ul class="price-list">
+							<li class="total">Tổng tiền:<span id="total"></span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div id="myModal" class="modal hide" data-backdrop="static" data-keyboard="false" role="dialog">
+		<div class="modal-dialog modal-sm">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h4 class="modal-title">Thanh toán thành công</h4>
+			</div>
+			<div class="modal-body">
+			  <b>Bạn có muốn xem đơn hàng?</b>
+			</div>
+			<div class="modal-footer">
+			  <button id="nexthome" type="button" class="btn btn-primary" data-dismiss="modal">Không</button>
+			  <button id="nextdonhang" type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+    <script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.slicknav.min.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/jquery.nicescroll.min.js"></script>
+	<script src="js/jquery.zoom.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+    <script src="js/main.js"></script>
+  <script>
+	  
+		var a =JSON.parse(sessionStorage.getItem('shoppingCart'))
+		var b =JSON.parse(sessionStorage.getItem('detailProduct'))
+		var dem =0;
+		if(a)
+		{
+			for(var i = 0; i< a.length ; i++)
+		{
+			if(b.length>0)
+			{
+				if(b[0].id == a[i].id)
+				dem++;
+			}
+			
+		}
+		}
+		
+		var k=0;
+		let arrId =[];
+		let arrCount = [];
+		let arrSupp = [];
+		if(a)
+		{
+			for(var i=0; i<a.length; i++)
+			{
+			k += a[i].count;
+			arrId.push(a[i].id);
+			arrCount.push(a[i].count);
+			arrSupp.push(a[i].ids)
+			}
+		}
+		
+		if(b.length>0 && dem == 0)
+		{
+			arrId.push(b[0].id);
+			arrCount.push(b[0].count);
+			arrSupp.push(b[0].ids)
+			k += b[0].count;
+		}
+		document.getElementById('soluong').innerHTML = k;
+		
+		var listsanpham = "";
+		var total = 0;
+		if(a)
+		{
+			for(var i=0; i<a.length; i++)
+		{
+			listsanpham += "<li>" 
+			+ "<div class='pl-thumb'><img src='"+a[i].images+"' alt=''></div>"
+			+ "<h6>" + a[i].name + "</h6>"
+			+ "<p>" + a[i].price + "</p>"
+			+ "<p>" + "Số lượng:" + a[i].count + "</p>"
+			+ "</li>";
+			total +=(a[i].price*a[i].count);
+		}
+		}
+		if(b.length>0 && dem ==0)
+		{
+			listsanpham += "<li>" 
+			+ "<div class='pl-thumb'><img src='"+b[0].images+"' alt=''></div>"
+			+ "<h6>" + b[0].name + "</h6>"
+			+ "<p>" + b[0].price + "</p>"
+			+ "<p>" + "Số lượng:" + b[0].count + "</p>"
+			+ "</li>";
+			total = total + (b[0].price*b[0].count);
+		}
+		
+		console.log(b.length);
+		document.getElementById('sanpham').innerHTML = listsanpham;
+		document.getElementById('total').innerHTML = total;
+		
+			let arrayObject = 
+				{
+					order : document.getElementById('order').value,
+					idOrder : document.getElementById('idorder').value,
+					status : "Đang xử lý",
+					idCustomer : document.getElementById('idcustomer').value,
+					nameCustomer : document.getElementById('nameCustomer').value,
+					addressShip : document.getElementById('addressShip').value,
+					numberPhoneCus : document.getElementById('numberPhoneCus').value,
+					arr : arrId,
+					arrSL: arrCount,
+					arridSupp: arrSupp
+				}
+		$("#submitcheckout").click(function(e){
+			e.preventDefault();
+			if(document.getElementById('addressShip').value){
+				if(document.getElementById('numberPhoneCus').value){
+				$.ajax({
+				type: "POST",
+				url: "/create-order",
+				dataType: 'json',
+				data:arrayObject ,
+				success: function(result) {
+					alert('ok');
+				},
+				error: function(result) {
+					
+				}
+       		 });
+				sessionStorage.clear();
+			}
+		}
+		})
+		$("#nextdonhang").click(function(e){
+			window.location.replace("http://localhost:8888/order");
+		});
+		$("#nexthome").click(function(e){
+			window.location.replace("http://localhost:8888");
+		});
+	
+  </script>
+ 
+</body>
+</html>

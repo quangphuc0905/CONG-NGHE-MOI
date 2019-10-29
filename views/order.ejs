@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Divisima | eCommerce</title>
+	<meta charset="UTF-8">
+	<meta name="description" content=" Divisima | eCommerce Template">
+	<meta name="keywords" content="divisima, eCommerce, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	<link href="img/favicon.ico" rel="shortcut icon"/>
+
+	<!-- Google Font -->
+	<!-- <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet"> -->
+	<!-- Stylesheets -->
+     <link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="css/flaticon.css"/>
+	<link rel="stylesheet" href="css/slicknav.min.css"/>
+	<link rel="stylesheet" href="css/jquery-ui.min.css"/>
+	<link rel="stylesheet" href="css/owl.carousel.min.css"/>
+	<link rel="stylesheet" href="css/animate.css"/>
+	<link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+    <header class="header-section">
+		<div class="header-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-2 text-center text-lg-left">
+						<!-- logo -->
+						<a href="/" class="site-logo">
+							<img src="images/logo.png" alt="">
+						</a>
+					</div>
+					<div class="col-xl-6 col-lg-5">
+						<form class="header-search-form" action="/search" method="POST">
+							<input type="text" name="nameProduct" placeholder="Search on divisima ....">
+							<button type="submit"><i class="flaticon-search"></i></button>
+						</form>
+					</div>
+					<div class="col-xl-4 col-lg-5">
+						<div class="user-panel">
+							 <div class="up-item">
+                <i class="flaticon-profile"></i>
+                
+                 <% if(!uname) { %>
+                <a href="#" data-toggle="modal" data-target="#modalLoginForm">Sign In</a>  or <a href="#" data-toggle="modal" data-target="#modalRegisterForm">Create Account</a>
+                <% } else { %>
+                  <a style="margin-right: 25px; font-weight: bold;"><%= uname %></a> <a href="/logout">Đăng xuất</a>
+                  <% } %>
+                            </div> 
+							<div class="up-item">
+								<div class="shopping-card">
+									<i class="flaticon-bag"></i>
+									<span class="total-count">0</span>
+								</div>
+                <a href="#" data-toggle="modal" data-target="#cart">Cart</a>
+                <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cart">Cart (<span class="total-count"></span>)</button> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<nav class="main-navbar">
+			<div class="container">
+				<!-- menu -->
+				<ul class="main-menu">
+                    <li><a href="/">Trang chủ</a></li>
+                    
+                    <% for (var i = 0; i < cate.length; i++) { %>
+                      <li><a href="/"><%=cate[i].nameCategory%></a></li>
+                      <% } %>
+
+				</ul>
+			</div>
+		</nav>
+    </header>
+    <div class="page-top-info" style="padding: 40px 0 50px;">
+		<div class="container">
+			<h4>Đơn hàng của bạn</h4>
+			<div class="site-pagination">
+				<a href="/">Home</a>
+			</div>
+		</div>
+    </div>
+    <div>
+
+		<!-- danh sach order cua customer hien tai -->
+		<%var lst=[];%>
+		<%for(let i = 0 ; i < order.length ; i++){%>
+			<%if(order[i].idCustomer==khs[0].idCustomer){%>
+				<%lst.push(order[i]);%>
+			<%}%>
+		<%}%>
+		
+		<!-- danh sach cac ma hoa don cua khach hang -->
+		<%var lstNum=[];%>
+		<%var p=0;%>
+		<%for(let i = 0; i< lst.length; i++){%>
+			<%var flag=0;%>
+			<%for(let j = 0 ; j < lstNum.length ; j++){%>
+				<%if(lst[i].idOrder==lstNum[j]){%>
+					<%flag=1;%>
+					<%break;%>
+				<%}%>
+			<%}%>
+			<%if(flag==0){%>
+				<%lstNum.push(lst[i].idOrder);%>
+				<%p++;%>
+			<%}%>
+		<%}%>
+		
+		<%for(var j=0; j < lstNum.length; j++){%>
+			<!-- Lay danh sach chi tiet cua hoa don co ma la lstNum[i] -->
+			<%var lstSP=[];%>
+			<%for(let i = 0 ; i < lst.length ; i++){%>
+				<%if(lst[i].idOrder==lstNum[j]){%>
+					<%lstSP.push(lst[i]);%>
+				<%}%>
+			<%}%>
+		<div class="row" style="margin-top: 20px;margin-bottom: 20px; margin-left: 10%; border: 1px solid #585858; border-radius: 10px; margin-right: 10%;">
+		
+
+            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+					<ul class="list-group" style="margin-top: 10px; margin-bottom: 10px;">	
+							<%var tongtien = 0%>				
+							<%for(var h =0; h < lstSP.length;h++){%>
+								<%for(let k =0;k < sps.length;k++){%>
+									<%if(lstSP[h].idProduct== sps[k].idProduct){%>
+										<%var tensp = sps[k].nameProduct%>
+										<%tongtien = tongtien + sps[k].price*lstSP[h].quantity%>
+										<% break;%>
+									<%}%>
+								<%}%>	
+								<li class="list-group-item"><%=lstSP[h].quantity%> x <%=tensp%> <b style="float: right;"><%=lstSP[h].status%></b> </li>
+							<%}%>
+						  </ul>
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="display: inline-block;">
+                <div style="height: 100%;">
+					 <ul style="display: inline-block;">
+						<br/>
+						<br/>
+						<br/>
+                        <li style="list-style-type: none; text-align: center;">Tổng tiền: <b><%=tongtien%></b> VND </li>
+					</ul>
+                     <ul class="list-group" style="float: right; max-width: 15%; width: 15%; height: 100%; margin-right: -6%;">
+                                    <button class="btn btn-danger" style="height: 100%;width: 100%;color: white;background-color: red; border: none;  border-top-right-radius: 10px; border-bottom-right-radius: 10px;" >X</button>
+                    </ul>
+                </div>
+            </div>
+            
+		</div>
+		
+        <%}%>
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            
+        </div>
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+	<title>Divisima | eCommerce Template</title>
+	<meta charset="UTF-8">
+	<meta name="description" content=" Divisima | eCommerce Template">
+	<meta name="keywords" content="divisima, eCommerce, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	<link href="img/favicon.ico" rel="shortcut icon"/>
+
+	<!-- Google Font -->
+
+
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="css/flaticon.css"/>
+	<link rel="stylesheet" href="css/slicknav.min.css"/>
+	<link rel="stylesheet" href="css/jquery-ui.min.css"/>
+	<link rel="stylesheet" href="css/owl.carousel.min.css"/>
+	<link rel="stylesheet" href="css/animate.css"/>
+	<link rel="stylesheet" href="css/style.css"/>
+
+
+	<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+</head>
+<body>
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+
+	<!-- Header section -->
+	<header class="header-section">
+		<div class="header-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-2 text-center text-lg-left">
+						<!-- logo -->
+						<a href="/" class="site-logo">
+							<img src="images/logo.png" alt="">
+						</a>
+					</div>
+					<div class="col-xl-6 col-lg-5">
+						<form class="header-search-form" action="/search" method="POST">
+							<input type="text" name="nameProduct" placeholder="Search on divisima ....">
+							<button type="submit"><i class="flaticon-search"></i></button>
+						</form>
+					</div>
+					<div class="col-xl-4 col-lg-5">
+						<div class="user-panel">
+							<div class="up-item">
+								<i class="flaticon-profile"></i>
+								<% if(!uname) { %>
+									<a href="#" data-toggle="modal" data-target="#modalLoginForm">Sign In</a>  or <a href="#" data-toggle="modal" data-target="#modalRegisterForm">Create Account</a>
+									<% } else { %>
+									  <a href="#" style="margin-right: 25px; font-weight: bold;"><%= uname %></a> <a href="/logout">Đăng xuất</a>
+									  <% } %>
+							</div>
+							<div class="up-item">
+								<div class="shopping-card">
+									<i class="flaticon-bag"></i>
+									<span id="quantity"></span>
+								</div>
+								<a href="#">Cart</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<nav class="main-navbar">
+			<div class="container">
+				<!-- menu -->
+				<ul class="main-menu">
+					<li><a href="/">Home</a></li>
+					<% for (var i = 0; i < cate.length; i++) { %>
+						<li><a href="/"><%=cate[i].nameCategory%></a></li>
+						<% } %>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<!-- Header section end -->
+	 <!--modal dang nhap-->
+	 <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	 aria-hidden="true">
+	 <div class="modal-dialog" role="document">
+	   <div class="modal-content">
+		 <div class="modal-header text-center">
+		   <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
+		   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			 <span aria-hidden="true">&times;</span>
+		   </button>
+		 </div>
+		 <form action="/signin" method="POST">
+		 <div class="modal-body mx-3">
+		   <div class="md-form mb-4" style="float: right;">
+			 <div class="col-12 col-lg-12 col-md-12 col-lg-12 control-label">
+				 <div>
+					 <input type="radio" name="loai" value="0">Khách hàng
+					 <input type="radio" name="loai" value="1" checked>Doanh nghiệp
+					 
+				 </div>
+			 </div>
+		   </div>
+		   <div class="md-form mb-4">
+			 <input type="text" id="defaultForm-user" name="username" class="form-control validate" placeholder="Tên tài khoản" required="required">
+		   </div>
+   
+		   <div class="md-form mb-4">
+			 <input type="password" id="defaultForm-pass" name="pass" class="form-control validate" placeholder="Mật khẩu" required="required">
+		   </div>
+		 
+		 </div>
+		 <div class="modal-footer d-flex justify-content-center">
+		   <button id="dangnhap" type="submit" class="btn btn-primary">Login</button>
+		 </div>
+	   </form>
+	   </div>
+	 </div>
+   </div>
+
+
+	<!-- Page info -->
+	<div class="page-top-info" style="padding: 40px 0 50px;">
+		<div class="container">
+			<h4>Product Page</h4>
+			<div class="site-pagination">
+				<a href="/">Home</a>
+			</div>
+		</div>
+	</div>
+	<!-- Page info end -->
+
+
+	<!-- product section -->
+	<section class="product-section">
+		<div class="container">
+			<div class="back-link">
+				<a href="/"> &lt;&lt; Trở về trang chủ</a>
+			</div>
+			<div class="row">
+				<div class="col-lg-4">
+					<div style="text-align: center; max-width: 70%;">
+						<img id="hinhanh" class="product-big-img" src="images/1.jpg" alt="">
+					</div>
+				</div>
+				<div class="col-lg-8 product-details">
+					<h2 id="tensanpham" class="p-title"></h2>
+					<h3 id="giasanpham" class="p-price">$39.90</h3>
+					
+					<div class="quantity">
+						<p>Quantity</p>
+                        <div class="pro-qty"><input id="soluongsp" type="text" value="1"></div>
+					</div>
+					<%var dem = uname%>
+					<%var demm = uname%>
+					<%if(!dem){%>
+						<a id="muahang" class="site-btn" data-toggle="modal" data-target="#myModal">MUA NGAY</a>
+					<%}%>
+					<%if(demm){%>
+						<a href="/checkout" id="muahang" class="site-btn">MUA NGAY</a>
+					<%}%>
+
+					<div id="accordion" class="accordion-area">
+						<div class="panel">
+							<div class="panel-header" id="headingOne">
+								<button class="panel-link active" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">Mô tả:</button>
+							</div>
+							<div id="collapse1" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+								<div class="panel-body">
+									<p id="des"></p>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- product section end -->
+
+ <!--modal thong bao dang nhap-->
+ <div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog modal-sm">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h4 class="modal-title">Thông báo</h4>
+			</div>
+			<div class="modal-body">
+			  <p>Bạn cần phải đăng nhập.</p>
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	<!-- Footer section -->
+	<section class="footer-section">
+		<div class="container">
+			<div class="footer-logo text-center">
+				<a href="/"><img src="./images/logo.png" alt=""></a>
+			</div>
+			<div class="row">
+				<div class="col-lg-3 col-sm-6">
+					<div class="footer-widget about-widget">
+						<h2>About</h2>
+						<p>Donec vitae purus nunc. Morbi faucibus erat sit amet congue mattis. Nullam frin-gilla faucibus urna, id dapibus erat iaculis ut. Integer ac sem.</p>
+						<img src="images/logo.png" alt="">
+					</div>
+				</div>
+				<div class="col-lg-3 col-sm-6">
+					<div class="footer-widget about-widget">
+						<h2>Questions</h2>
+						<ul>
+							<li><a href="/">About Us</a></li>
+							<li><a href="/">Track Orders</a></li>
+							<li><a href="/">Returns</a></li>
+							<li><a href="/">Jobs</a></li>
+							<li><a href="/">Shipping</a></li>
+							<li><a href="/">Blog</a></li>
+						</ul>
+						<ul>
+							<li><a href="/">Partners</a></li>
+							<li><a href="/">Bloggers</a></li>
+							<li><a href="/">Support</a></li>
+							<li><a href="/">Terms of Use</a></li>
+							<li><a href="/">Press</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-sm-6">
+					<div class="footer-widget about-widget">
+						<h2>Questions</h2>
+						<div class="fw-latest-post-widget">
+							<div class="lp-item">
+								<div class="lp-thumb set-bg"></div>
+								<div class="lp-content">
+									<h6>what shoes to wear</h6>
+									<span>Oct 21, 2018</span>
+									<a href="/" class="readmore">Read More</a>
+								</div>
+							</div>
+							<div class="lp-item">
+								<div class="lp-thumb set-bg"></div>
+								<div class="lp-content">
+									<h6>trends this year</h6>
+									<span>Oct 21, 2018</span>
+									<a href="/" class="readmore">Read More</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-sm-6">
+					<div class="footer-widget contact-widget">
+						<h2>Questions</h2>
+						<div class="con-info">
+							<span>C.</span>
+							<p>Your Company Ltd </p>
+						</div>
+						<div class="con-info">
+							<span>B.</span>
+							<p>1481 Creekside Lane  Avila Beach, CA 93424, P.O. BOX 68 </p>
+						</div>
+						<div class="con-info">
+							<span>T.</span>
+							<p>+53 345 7953 32453</p>
+						</div>
+						<div class="con-info">
+							<span>E.</span>
+							<p>office@youremail.com</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="social-links-warp">
+			<div class="container">
+				<div class="social-links">
+					<a href="/" class="instagram"><i class="fa fa-instagram"></i><span>instagram</span></a>
+					<a href="/" class="google-plus"><i class="fa fa-google-plus"></i><span>g+plus</span></a>
+					<a href="/" class="pinterest"><i class="fa fa-pinterest"></i><span>pinterest</span></a>
+					<a href="/" class="facebook"><i class="fa fa-facebook"></i><span>facebook</span></a>
+					<a href="/" class="twitter"><i class="fa fa-twitter"></i><span>twitter</span></a>
+					<a href="/" class="youtube"><i class="fa fa-youtube"></i><span>youtube</span></a>
+					<a href="/" class="tumblr"><i class="fa fa-tumblr-square"></i><span>tumblr</span></a>
+				</div>
+
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --> 
+<p class="text-white text-center mt-5">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Design <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="/" target="_blank">Quang Phuc</a></p>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+			</div>
+		</div>
+	</section>
+	<!--====== Javascripts & Jquery ======-->
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.slicknav.min.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/jquery.nicescroll.min.js"></script>
+	<script src="js/jquery.zoom.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/main.js"></script>
+	<script>
+		//show quantity in the cart
+			var a =JSON.parse(sessionStorage.getItem('shoppingCart'))
+			var k=0;
+			console.log(a)
+			if(a!=null)
+			{
+				for(var i=0; i<a.length; i++)
+				{
+					k += a[i].count;
+				}
+			}
+			
+			document.getElementById('quantity').innerHTML = k;
+		//show detail product
+		
+		var b =JSON.parse(sessionStorage.getItem('detailProduct'))
+		var dem = b.length;
+		document.getElementById('tensanpham').innerHTML = b[dem-1].name;
+		document.getElementById('giasanpham').innerHTML = b[dem-1].price+ " VND";
+		document.getElementById('soluongsp').innerHTML = b[dem-1].count;
+		document.getElementById('hinhanh').src = b[dem-1].images;
+		
+		
+		arrProduct = [];
+				var id = b[dem-1].id;
+				var name = b[dem-1].name;
+				var price = b[dem-1].price;
+				var count = b[dem-1].count;
+				var images = b[dem-1].images;
+				var ids = b[dem-1].ids;
+				var names = b[dem-1].names
+		
+		function Item( id, name, price, count, images, ids, names) {
+		this.id = id;
+		this.name = name;
+		this.price = price;
+		this.count = count;
+		this.images = images;
+		this.ids = ids;
+		this.names = names;
+	  }
+	  var item = new Item(id, name, price, count, images, ids, names);
+	  console.log(item);
+	arrProduct.push(item);
+	
+	</script>
+	</body>
+</html>

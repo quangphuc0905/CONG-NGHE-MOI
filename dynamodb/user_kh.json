@@ -1,0 +1,20 @@
+[
+    {
+        "idCustomer": 1,
+        "nameCustomer": "quang phuc",
+        "username": "user001",
+        "password": "12345678",
+        "numberPhone" : "2312303203",
+        "email": "phuc@gmail.com",
+        "address": "22 nguyen thai son"
+    },
+    {
+        "idCustomer": 2,
+        "nameCustomer": "tran quang",
+        "username": "user002",
+        "password": "123456",
+        "numberPhone" : "12345679",
+        "email": "quang@gmail.com",
+        "address": "11 nguyen thai son"
+    }
+]

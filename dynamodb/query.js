@@ -1,0 +1,336 @@
+const AWS = require('aws-sdk');
+const fs = require('fs');
+
+AWS.config.update({
+    region: 'local',
+    endpoint: 'http://localhost:8000'
+});
+
+let docClient = new AWS.DynamoDB.DocumentClient();
+function searchItems(nameProduct, req, res) {
+    let params = {
+        TableName: 'SAN_PHAM_TABLE'
+    };
+    var params1 = {
+        TableName: "LOAI_SP_TABLE"
+      }
+      var params2 = {
+        TableName: "NHA_CUNG_CAP_TABLE"
+      }
+      var params3 = {
+        TableName: "KHACH_HANG_TABLE"
+      }
+    let queryObject = {};
+    console.log();
+    if (nameProduct) {
+        params.FilterExpression = '#n = :nameProduct';
+        params.ExpressionAttributeNames = { '#n': 'nameProduct' };
+        params.ExpressionAttributeValues = { ':nameProduct': String(nameProduct) };
+        docClient.scan(params, (err, data) => {
+            if (err) {
+                queryObject.err = err;
+            } 
+             let sess = req.session;
+            console.log(req.session);
+            if(sess.user) {
+                console.log("Yes");
+                docClient.scan(params1, function(err, data1){
+                  if(err){
+                    console.log(JSON.stringify(err));
+                  }
+                  else{
+                    docClient.scan(params2, function(err, data2){
+                      if(err){
+                        console.log(JSON.stringify(err));
+                      }
+                      else{
+                        docClient.scan(params3, function(err, data3){
+                          if(err){
+                            console.log(JSON.stringify(err));
+                          }
+                          else{
+                              res.render('index.ejs', { scanObject: data.Items, uname: sess.user, cate: data1.Items, supp:data2.Items, khs: data3.Items });
+                          }
+                        })              }
+                    })
+                  }
+                })
+              }
+              else {
+                console.log("No");
+                docClient.scan(params1, function(err, data1){
+                  if(err){
+                    console.log(JSON.stringify(err));
+                  }
+                  else{
+                    docClient.scan(params2, function(err, data2){
+                      if(err){
+                        console.log(JSON.stringify(err));
+                      }
+                      else{
+                        docClient.scan(params3, function(err, data3){
+                          if(err){
+                            console.log(JSON.stringify(err));
+                          }
+                          else{
+                              res.render('index.ejs', { scanObject: data.Items, uname: null, cate: data1.Items, supp:data2.Items, khs: data3.Items });
+                          }
+                        })              }
+                    })
+                  }
+                })
+              }
+        });
+    }
+}
+function deleteItem(idProduct, nameProduct, res) {
+    let params = {
+        TableName: 'SAN_PHAM_TABLE',
+        Key: {
+            "idProduct": Number(idProduct),
+            "nameProduct": String(nameProduct)
+        }
+    };
+    docClient.delete(params, (err, data) => {
+        if (err) {
+            console.error("Unable to delete item. Error JSON:", JSON.stringify(err, null, 2));
+        } else {
+            res.writeHead(302, { 'Location': '/supplier/' });
+        }
+        res.end();
+    });
+}
+function createItem(idProduct, nameProduct, idSupplier, nameSupplier, idCategory, price, images, description, res) {
+    let params = {
+        TableName: 'SAN_PHAM_TABLE',
+        Item: {
+            idProduct: Number(idProduct),
+            nameProduct: String(nameProduct),
+            idSupplier: Number(idSupplier),
+            nameSupplier: String(nameSupplier),
+            idCategory: Number(idCategory),
+            price: Number(price),
+            images: String(images),
+            description: String(description)
+        }
+        
+    };
+    
+    docClient.put(params, (err, data) => {
+        if (err) {
+            res.writeHead(302, { 'Location': '/supplier' }, "Thêm thất bại");
+            res.write('Thêm thất bại');
+        }
+        else {
+            
+            res.writeHead(302, { 'Location': '/supplier'});
+            
+        }
+        res.end();
+    });
+}
+function updateItem(idProduct, nameProduct, idSupplier, nameSupplier, idCategory, price, images, description, res) {
+    let params = {
+        TableName: 'SAN_PHAM_TABLE',
+        Key: {
+            "idProduct": Number(idProduct),
+            "nameProduct": String(nameProduct)
+        },
+        UpdateExpression: "set #p = :price, #i = :images, #d = :description, #ids = :idSupplier, #n = :nameSupplier, #idc = :idCategory",
+        ExpressionAttributeNames: {
+            '#p': 'price',
+            '#i': 'images',
+            '#d': 'description',
+            '#ids': 'idSupplier',
+            '#n': 'nameSupplier',
+            '#idc': 'idCategory'
+        },
+        ExpressionAttributeValues: {
+            ':price': Number(price),
+            ':images': String(images),
+            ':description': String(description),
+            ':idSupplier': Number(idSupplier),
+            ':nameSupplier': String(nameSupplier),
+            ':idCategory': Number(idCategory)
+        },
+        ReturnValues: "UPDATED_NEW"
+    };
+    docClient.update(params, (err, data) => {
+        if (err) {
+            res.write('<h5 style="color:red;">All fields are required!</h5>');
+        } else {
+            res.writeHead(302, { 'Location': '/supplier' });
+        }
+        res.end();
+    })
+}
+
+function updateStatus(order, idOrder, status, res) {
+    let params = {
+        TableName: 'DON_HANG_TABLE',
+        Key: {
+            "order": Number(order),
+            "idOrder": Number(idOrder)
+        },
+        UpdateExpression: "set #s = :status",
+        
+        ExpressionAttributeNames: {
+            '#s': 'status'
+        },
+        ExpressionAttributeValues: {
+            ':status': String(status)
+        },
+        ReturnValues: "UPDATED_NEW"
+    };
+    docClient.update(params, (err, data) => {
+        if (err) {
+            res.write('err');
+        } else {
+            res.writeHead(302, { 'Location': '/supplier' });
+        }
+        res.end();
+    })
+}
+function signup(idCustomer, nameCustomer, numberPhone, email, username, password, address, res) {
+  let params = {
+      TableName: 'KHACH_HANG_TABLE',
+      Item: {
+          idCustomer: Number(idCustomer),
+          nameCustomer: String(nameCustomer),
+          numberPhone: String(numberPhone),
+          email: String(email),
+          username: String(username),
+          password: String(password),
+          address:String(address)
+      }
+  };
+  docClient.put(params, (err, data) => {
+      if (err) {
+          res.writeHead(302, { 'Location': '/' }, "Thêm thất bại");
+      }
+      else {
+        
+          res.writeHead(302, { 'Location': '/' }, "Thêm Thành Công");
+          
+      }
+      res.end();
+  });
+  
+}
+
+function signupSupp(idSupplier, nameSupplier, numberPhone, email, username, password, address, res) {
+    let params = {
+        TableName: 'NHA_CUNG_CAP_TABLE',
+        Item: {
+            idSupplier: Number(idSupplier),
+            nameSupplier: String(nameSupplier),
+            numberPhone: String(numberPhone),
+            email: String(email),
+            username: String(username),
+            password: String(password),
+            address: String(address)
+        }
+    };
+    docClient.put(params, (err, data) => {
+        if (err) {
+            res.writeHead(302, { 'Location': '/' }, "Thêm thất bại");
+        }
+        else {
+            res.writeHead(302, { 'Location': '/' }, "Thêm Thành Công");
+        }
+        res.end();
+    });
+    
+  }
+
+  function createOrder(order, status, idProduct, idSupplier, idCustomer, idOrder, quantity, nameCustomer, addressShip, numberPhoneCus, orderDate, res) {
+    let params = {
+        TableName: 'DON_HANG_TABLE',
+        Item: {
+          order: Number(order),
+          status: String(status),
+          idProduct :Number(idProduct),
+          idSupplier:Number(idSupplier),
+          idCustomer: Number(idCustomer),
+          idOrder: Number(idOrder),
+          quantity: Number(quantity),
+          nameCustomer: String(nameCustomer),
+          addressShip: String(addressShip),
+          numberPhoneCus: String(numberPhoneCus),
+          orderDate: String(orderDate)
+        }
+        
+    };
+    
+    docClient.put(params, (err, data) => {
+        if (err) {
+            //res.writeHead(302, { 'Location': '/checkout' }, "Thêm thất bại");
+            res.write('Thêm thất bại');
+            console.log("Bi loi")
+        }
+        else {
+            
+            //res.writeHead(302, { 'Location': '/checkout'});
+            console.log("Thanh cong roi")
+        }
+        res.end();
+    });
+}
+// kiểm tra username da ton tai hay chua
+function checkUserKHExist(req, res) {
+    var params4 = {
+        TableName: 'KHACH_HANG_TABLE'
+    };
+    var datakh = {};
+    return docClient.scan(params4, function(err, data){
+        res.write(data.Items);
+    })
+   
+}
+// function xem và cập nhật tình trạng đơn hàng
+function updateOrder(order, status, idProduct, idSupplier, idCustomer, idOrder, quantity, nameCustomer, addressShip, numberPhoneCus, orderDate, res) {
+  let params = {
+      TableName: 'SAN_PHAM',
+      Key: {
+          "idProduct": Number(idProduct),
+          "nameProduct": String(nameProduct)
+      },
+      UpdateExpression: "set #p = :price, #i = :images, #d = :description, #ids = :idSupplier, #n = :nameSupplier, #idc = :idCategory",
+      ExpressionAttributeNames: {
+          '#p': 'price',
+          '#i': 'images',
+          '#d': 'description',
+          '#ids': 'idSupplier',
+          '#n': 'nameSupplier',
+          '#idc': 'idCategory'
+      },
+      ExpressionAttributeValues: {
+          ':price': Number(price),
+          ':images': String(images),
+          ':description': String(description),
+          ':idSupplier': Number(idSupplier),
+          ':nameSupplier': String(nameSupplier),
+          ':idCategory': Number(idCategory)
+      },
+      ReturnValues: "UPDATED_NEW"
+  };
+  docClient.update(params, (err, data) => {
+      if (err) {
+          res.write('<h5 style="color:red;">All fields are required!</h5>');
+      } else {
+          res.writeHead(302, { 'Location': '/supplier' });
+      }
+      res.end();
+  })
+}
+module.exports = {
+    searchItems: searchItems,
+    deleteItem: deleteItem,
+    createItem: createItem,
+    signup: signup,
+    signupSupp:signupSupp,
+    updateItem: updateItem,
+    createOrder:createOrder,
+    checkUserKHExist: checkUserKHExist,
+    updateStatus :updateStatus
+};

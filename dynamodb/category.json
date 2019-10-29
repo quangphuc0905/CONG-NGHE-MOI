@@ -1,0 +1,22 @@
+[
+    {
+        "idCategory":1,
+        "nameCategory":"Quần áo"
+    },
+    {
+        "idCategory":2,
+        "nameCategory":"Giày dép"
+    },
+    {
+        "idCategory":3,
+        "nameCategory":"Mũ nón"
+    },
+    {
+        "idCategory":4,
+        "nameCategory":"Sách vở"
+    },
+    {
+        "idCategory":5,
+        "nameCategory":"Điện tử"
+    }
+]

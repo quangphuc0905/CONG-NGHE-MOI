@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+	<title>Divisima | eCommerce</title>
+	<meta charset="UTF-8">
+	<meta name="description" content=" Divisima | eCommerce Template">
+	<meta name="keywords" content="divisima, eCommerce, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	<link href="img/favicon.ico" rel="shortcut icon"/>
+	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+
+	<!-- Google Font -->
+	<!-- <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet"> -->
+	<!-- Stylesheets -->
+     <link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="css/flaticon.css"/>
+	<link rel="stylesheet" href="css/slicknav.min.css"/>
+	<link rel="stylesheet" href="css/jquery-ui.min.css"/>
+	<link rel="stylesheet" href="css/owl.carousel.min.css"/>
+	<link rel="stylesheet" href="css/animate.css"/>
+	<link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+    <header class="header-section">
+		<div class="header-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-2 text-center text-lg-left">
+						<!-- logo -->
+						<a href="/" class="site-logo">
+							<img src="images/logo.png" alt="">
+						</a>
+					</div>
+					<div class="col-xl-6 col-lg-5">
+						<form class="header-search-form" action="/search" method="POST">
+							<input type="text" name="nameProduct" placeholder="Search on divisima ....">
+							<button type="submit"><i class="flaticon-search"></i></button>
+						</form>
+					</div>
+					<div class="col-xl-4 col-lg-5">
+						<div class="user-panel">
+							 <div class="up-item">
+                <i class="flaticon-profile"></i>
+                
+                 <% if(!uname) { %>
+                <a href="#" data-toggle="modal" data-target="#modalLoginForm">Sign In</a>  or <a href="#" data-toggle="modal" data-target="#modalRegisterForm">Create Account</a>
+                <% } else { %>
+                  <a href="#" style="margin-right: 25px; font-weight: bold;"><%= uname %></a> <a href="/logout">Đăng xuất</a>
+                  
+                  <% } %>
+                            </div> 
+							<div class="up-item">
+								<div class="shopping-card">
+									<i class="flaticon-bag"></i>
+									<span class="total-count"></span>
+								</div>
+                <a href="#" data-toggle="modal" data-target="#cart">Cart</a>
+                <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cart">Cart (<span class="total-count"></span>)</button> -->
+              </div>
+              
+						</div>
+					</div>
+				</div>
+			</div>
+    </div>
+    <%var temp = uname%>
+      <%var tam = uname%>
+    <%if(!temp){%>
+      <div style="float: right; margin-top: -50px; margin-right: 20px; display: none"><a href="/order" style="color: black; font-weight: bold;">Đơn hàng của bạn</a></div>
+
+      <%}%>
+      <%if(tam){%>
+        <div style="float: right; margin-top: -50px; margin-right: 20px;"><a href="/order" style="color: black; font-weight: bold;">Đơn hàng của bạn</a></div>
+
+      <%}%>
+		<nav class="main-navbar">
+			<div class="container">
+				<!-- menu -->
+				<ul class="main-menu">
+                    <li><a href="/">Trang chủ</a></li>
+                    
+                    <% for (var i = 0; i < cate.length; i++) { %>
+                      <li><a href="/"><%=cate[i].nameCategory%></a></li>
+                      <% } %>
+                    <li style="float: right; margin-right: -70px;"><a href="/" data-toggle="modal" data-target="#modalRegisterFormDN">Bán hàng cùng Divisima</a></li>
+
+				</ul>
+			</div>
+		</nav>
+    </header>
+    <!--modal dang nhap-->
+    <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/signin" method="POST">
+      <div class="modal-body mx-3">
+        <div class="md-form mb-4" style="float: right;">
+          <div class="col-12 col-lg-12 col-md-12 col-lg-12 control-label">
+              <div>
+                  <input type="radio" name="loai" value="0">Khách hàng
+                  <input type="radio" name="loai" value="1" checked>Doanh nghiệp
+                  
+              </div>
+          </div>
+        </div>
+        <div class="md-form mb-4">
+          <input type="text" id="defaultForm-user" name="username" class="form-control validate" placeholder="Tên tài khoản" required="required">
+        </div>
+
+        <div class="md-form mb-4">
+          <input type="password" id="defaultForm-pass" name="pass" class="form-control validate" placeholder="Mật khẩu" required="required">
+        </div>
+      
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button id="dangnhap" type="submit" class="btn btn-primary">Login</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+<!--modal dang ky khach hàng-->
+<div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Đăng ký khách hàng</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/signup" method="POST" id="signupKH">
+      <div class="modal-body mx-3">
+            <%var max = khs[0].idCustomer%>
+            <% for (var i = 1; i < khs.length; i++) { %>
+                 <%if(max < khs[i].idCustomer){%>
+                   <%max = khs[i].idCustomer;%>
+                 <% } %>
+             <% } %>
+        <div class="md-form mb-4" style="display: none;">
+              <input type="text" name="idCustomer" value="<%=max+1%>" class="form-control validate" placeholder="Id">
+        </div>
+
+        <div class="md-form mb-4">
+          <input type="text" name="username" class="form-control validate" placeholder="Tên tài khoản" required="required">
+        </div>
+        
+        <div class="md-form mb-4">
+          <input type="password" id="pass" name="passwor" class="form-control validate" placeholder="Mật khẩu" required="required">
+        </div>
+        <div class="md-form mb-4">
+          <input type="password" name="password" class="form-control validate" placeholder="Nhập lại mật khẩu" required="required">
+        </div>
+        <div class="md-form mb-4">
+          <input type="text" name="nameCustomer"  class="form-control validate" placeholder="Họ và tên" required="required">
+        </div>
+        <div class="md-form mb-4">
+          <input type="email" name="email" class="form-control validate" placeholder="Email" required="required">
+        </div>
+        <div class="md-form mb-4">
+          <input type="number" name="numberPhone" class="form-control validate" placeholder="Số điện thoại" required="required">
+        </div>
+        <div class="md-form mb-4">
+            <input type="text" name="address" class="form-control validate" placeholder="Địa chỉ" required="required">
+          </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="submit" id="clickdangky" class="btn btn-primary">Sign up</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<!--modal dang ky doanh nghiep-->
+<div class="modal fade" id="modalRegisterFormDN" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Đăng ký bán hàng</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/signupdn" method="POST" id="signupDN">
+      <div class="modal-body mx-3">
+            <%var maxx = supp[0].idSupplier%>
+            <% for (var i = 1; i < supp.length; i++) { %>
+                 <%if(maxx < supp[i].idSupplier){%>
+                   <%maxx = supp[i].idSupplier;%>
+                 <% } %>
+             <% } %>
+        <div class="md-form mb-4" style="display: none;">
+              <input type="text" name="idSupplier" value="<%=maxx+1%>" class="form-control validate" placeholder="Id">
+        </div>
+        <div class="md-form mb-4">
+          <input type="text" name="username" class="form-control validate" placeholder="Tên tài khoản" required="required">
+        </div>
+        <div class="md-form mb-4">
+          <input type="password" id="password" name="pass" class="form-control validate" placeholder="Mật khẩu" required="required">
+        </div>
+        <div class="md-form mb-4">
+          <input type="password" name="password" class="form-control validate" placeholder="Nhập lại mật khẩu" required="required">
+        </div>
+        <div class="md-form mb-4">
+          <input type="text" name="nameSupplier"  class="form-control validate" placeholder="Họ và tên" required="required">
+        </div>
+        <div class="md-form mb-4">
+          <input type="email" name="email" class="form-control validate" placeholder="Email" required="required">
+        </div>
+        <div class="md-form mb-4">
+          <input type="number" name="numberPhone" class="form-control validate" placeholder="Số điện thoại" required="required">
+        </div>
+        <div class="md-form mb-4">
+            <input type="text" name="address" class="form-control validate" placeholder="Địa chỉ" required="required">
+          </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary">Sign up</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+    <section class="hero-section">
+		<div class="hero-slider owl-carousel">
+            <div class="hs-item set-bg">
+                <img src="images/bg.jpg"/>
+			</div>
+            <div class="hs-item set-bg">
+                <img src="images/bg-2.jpg">
+			</div>
+		</div>
+		<div class="container">
+			<div class="slide-num-holder" id="snh-1"></div>
+		</div>
+    </section>
+    <section class="product-filter-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2 style="padding-top: 2%;">BROWSE TOP SELLING PRODUCTS</h2>
+                </div>
+                <!-- <ul class="product-filter-menu">
+                    <li><a href="#">TOPS</a></li>
+                    <li><a href="#">JUMPSUITS</a></li>
+                    <li><a href="#">LINGERIE</a></li>
+                    <li><a href="#">JEANS</a></li>
+                    <li><a href="#">DRESSES</a></li>
+                    <li><a href="#">COATS</a></li>
+                    <li><a href="#">JUMPERS</a></li>
+                    <li><a href="#">LEGGINGS</a></li>
+                </ul> -->
+                <div class="row">
+                    <style>.pi-pic .resized{ height: 300px;}</style>
+                    <% for (var i = 0; i < scanObject.length; i++) { %>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="product-item">
+                            <div class="pi-pic" style="position: relative; height: 400px; width: 250px;">
+                                <img src="<%=scanObject[i].images%>" alt="" style="position: absolute; height: 100%; width: 100%;">
+                                <div class="pi-links">
+                                    <a href="#" class="add-to-cart" data-toggle="modal" data-target="#cart" data-ids="<%= scanObject[i].idSupplier %>" data-names="<%= scanObject[i].nameSupplier %>" data-id="<%= scanObject[i].idProduct %>" data-name="<%= scanObject[i].nameProduct %>" data-price="<%= scanObject[i].price %>" data-images="<%= scanObject[i].images %>"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                                    <a href="/product" class="wishlist-btn" data-ids="<%= scanObject[i].idSupplier %>" data-names="<%= scanObject[i].nameSupplier %>" data-id="<%= scanObject[i].idProduct %>" data-name="<%= scanObject[i].nameProduct %>" data-price="<%= scanObject[i].price %>" data-images="<%= scanObject[i].images %>" ><i class="flaticon-refresh"></i></a>
+                                </div>
+                            </div>
+                            <div class="pi-text">
+                                <h6><%= scanObject[i].price %></h6>
+                                <p><%= scanObject[i].nameProduct %> </p>
+                            </div>
+                        </div>
+                    </div>
+                  
+                    
+                <% } %>
+                </div>
+                <div class="text-center pt-5">
+                    <button class="site-btn sb-line sb-dark">LOAD MORE</button>
+                </div>
+            </div>
+        </section>
+        <!--modal cart-->
+        <%var dem = uname%>
+        <%var demm = uname%>
+
+        <div class="modal fade" id="cart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <table class="show-cart table">
+                  
+                </table>
+                <div>Total price: $<span class="total-cart"></span></div>
+              </div>
+              <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                 <%if(!dem){%>
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Thanh Toán</button>
+                  <%}%>
+                  <%if(demm){%>
+                    <button type="button" class="btn btn-primary"><a href="/checkout" style="color: white;">Thanh Toán</a></button>
+                  <%}%>
+
+              </div>
+            </div>
+          </div>
+        </div> 
+        <!--modal thong bao dang nhap-->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-sm">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Thông báo</h4>
+                </div>
+                <div class="modal-body">
+                  <p>Bạn cần phải đăng nhập.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--modal thong bao dang ky that bai-->
+        <div class="modal fade" id="myModalthatbai" role="dialog">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Thông báo</h4>
+              </div>
+              <div class="modal-body">
+                <p>Bạn cần phải đăng nhập.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <section class="footer-section">
+                <div class="container">
+                    <div class="footer-logo text-center">
+                        <a href="/"><img src="images/logo.png" alt=""></a>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="footer-widget about-widget">
+                                <h2>About</h2>
+                                <p>Donec vitae purus nunc. Morbi faucibus erat sit amet congue mattis. Nullam frin-gilla faucibus urna, id dapibus erat iaculis ut. Integer ac sem.</p>
+                                <img src="images/logo.png" alt="">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="footer-widget about-widget">
+                                <h2>Questions</h2>
+                                <ul>
+                                    <li><a href="/">About Us</a></li>
+                                    <li><a href="/">Track Orders</a></li>
+                                    <li><a href="/">Returns</a></li>
+                                    <li><a href="/">Jobs</a></li>
+                                    <li><a href="/">Shipping</a></li>
+                                    <li><a href="/">Blog</a></li>
+                                </ul>
+                                <ul>
+                                    <li><a href="/">Partners</a></li>
+                                    <li><a href="/">Bloggers</a></li>
+                                    <li><a href="/">Support</a></li>
+                                    <li><a href="/">Terms of Use</a></li>
+                                    <li><a href="/">Press</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="footer-widget about-widget">
+                                <h2>Questions</h2>
+                                <div class="fw-latest-post-widget">
+                                    <div class="lp-item">
+                                        <div class="lp-thumb set-bg"></div>
+                                        <div class="lp-content">
+                                            <h6>what shoes to wear</h6>
+                                            <span>Oct 21, 2018</span>
+                                            <a href="/" class="readmore">Read More</a>
+                                        </div>
+                                    </div>
+                                    <div class="lp-item">
+                                        <div class="lp-thumb set-bg"></div>
+                                        <div class="lp-content">
+                                            <h6>trends this year</h6>
+                                            <span>Oct 21, 2018</span>
+                                            <a href="/" class="readmore">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="footer-widget contact-widget">
+                                <h2>Questions</h2>
+                                <div class="con-info">
+                                    <span>C.</span>
+                                    <p>Your Company Ltd </p>
+                                </div>
+                                <div class="con-info">
+                                    <span>B.</span>
+                                    <p>1481 Creekside Lane  Avila Beach, CA 93424, P.O. BOX 68 </p>
+                                </div>
+                                <div class="con-info">
+                                    <span>T.</span>
+                                    <p>+53 345 7953 32453</p>
+                                </div>
+                                <div class="con-info">
+                                    <span>E.</span>
+                                    <p>office@youremail.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="social-links-warp">
+                    <div class="container">
+                        
+        
+        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --> 
+        <p class="text-white text-center mt-5">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="/" target="_blank">Quang Phuc</a></p>
+        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+        
+                    </div>
+                </div>
+            </section>
+    <!-- <script src="js/jquery-3.2.1.min.js"></script> -->
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.slicknav.min.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/jquery.nicescroll.min.js"></script>
+	<script src="js/jquery.zoom.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+    // ************************************************
+// Shopping Cart API
+// ************************************************
+var a = [];
+sessionStorage.setItem('detailProduct', JSON.stringify(a));
+var detailProduct = (function() {
+  // =============================
+  // Private methods and propeties
+  // =============================
+  product = [];
+  // Constructor
+  function Item( id, name, price, count, images, ids, names) {
+    this.id = id;
+    this.name = name;
+    this.price = price;
+    this.count = count;
+    this.images = images;
+    this.ids = ids;
+    this.names = names;
+  }
+  // Save cart
+  function saveCart() {
+    sessionStorage.setItem('detailProduct', JSON.stringify(product));
+  }
+  // =============================
+  // Public methods and propeties
+  // =============================
+  var object = {};
+  
+  // Add to cart
+  object.addItemToCart = function(id, name, price, count, images, ids, names) {
+    for(var item in product) {
+      if(product[item].id === id) {
+        product[item].count ++;
+        saveCart();
+        return;
+      }
+    }
+    var item = new Item(id, name, price, count, images, ids, names);
+    product.push(item);
+    saveCart();
+  }
+  // Set count from item
+  object.setCountForItem = function(id, count) {
+    for(var i in product) {
+      if (product[i].id === id) {
+        product[i].count = count;
+        break;
+      }
+    }
+  };
+  // Remove item from cart
+  object.removeItemFromCart = function(id) {
+      for(var item in product) {
+        if(product[item].id === id) {
+          product[item].count --;
+          if(product[item].count === 0) {
+            product.splice(item, 1);
+          }
+          break;
+        }
+    }
+    saveCart();
+  }
+
+  // Remove all items from cart
+  object.removeItemFromCartAll = function(id) {
+    for(var item in product) {
+      if(product[item].id === id) {
+        product.splice(item, 1);
+        break;
+      }
+    }
+    saveCart();
+  }
+
+  return object;
+})();
+
+var shoppingCart = (function() {
+  // =============================
+  // Private methods and propeties
+  // =============================
+  cart = [];
+  // Constructor
+  function Item( id, name, price, count, images, ids, names) {
+    this.id = id;
+    this.name = name;
+    this.price = price;
+    this.count = count;
+    this.images = images;
+    this.ids = ids;
+    this.names = names;
+  }
+  // Save cart
+  function saveCart() {
+    sessionStorage.setItem('shoppingCart', JSON.stringify(cart));
+  }
+  
+    // Load cart
+  function loadCart() {
+    cart = JSON.parse(sessionStorage.getItem('shoppingCart'));
+  }
+  if (sessionStorage.getItem("shoppingCart") != null) {
+    loadCart();
+  }
+  
+
+  // =============================
+  // Public methods and propeties
+  // =============================
+  var obj = {};
+  
+  // Add to cart
+  obj.addItemToCart = function(id, name, price, count, images, ids, names) {
+    for(var item in cart) {
+      if(cart[item].id === id) {
+        cart[item].count ++;
+        saveCart();
+        return;
+      }
+    }
+    var item = new Item(id, name, price, count, images, ids, names);
+    cart.push(item);
+    saveCart();
+  }
+  // Set count from item
+  obj.setCountForItem = function(id, count) {
+    for(var i in cart) {
+      if (cart[i].id === id) {
+        cart[i].count = count;
+        break;
+      }
+    }
+  };
+  // Remove item from cart
+  obj.removeItemFromCart = function(id) {
+      for(var item in cart) {
+        if(cart[item].id === id) {
+          cart[item].count --;
+          if(cart[item].count === 0) {
+            cart.splice(item, 1);
+          }
+          break;
+        }
+    }
+    saveCart();
+  }
+
+  // Remove all items from cart
+  obj.removeItemFromCartAll = function(id) {
+    for(var item in cart) {
+      if(cart[item].id === id) {
+        cart.splice(item, 1);
+        break;
+      }
+    }
+    saveCart();
+  }
+
+  // Clear cart
+  obj.clearCart = function() {
+    cart = [];
+    saveCart();
+  }
+
+  // Count cart 
+  obj.totalCount = function() {
+    var totalCount = 0;
+    for(var item in cart) {
+      totalCount += cart[item].count;
+    }
+    return totalCount;
+  }
+
+  // Total cart
+  obj.totalCart = function() {
+    var totalCart = 0;
+    for(var item in cart) {
+      totalCart += cart[item].price * cart[item].count;
+    }
+    return Number(totalCart.toFixed(2));
+  }
+
+  // List cart
+  obj.listCart = function() {
+    var cartCopy = [];
+    for(i in cart) {
+      item = cart[i];
+      itemCopy = {};
+      for(p in item) {
+        itemCopy[p] = item[p];
+      }
+      itemCopy.total = Number(item.price * item.count).toFixed(2);
+      cartCopy.push(itemCopy)
+    }
+    return cartCopy;
+  }
+
+  // cart : Array
+  // Item : Object/Class
+  // addItemToCart : Function
+  // removeItemFromCart : Function
+  // removeItemFromCartAll : Function
+  // clearCart : Function
+  // countCart : Function
+  // totalCart : Function
+  // listCart : Function
+  // saveCart : Function
+  // loadCart : Function
+  return obj;
+})();
+
+// *****************************************
+// Triggers / Events
+// ***************************************** 
+// Add item
+$('.add-to-cart').click(function(event) {
+  event.preventDefault();
+  var id = $(this).data('id');
+  var name = $(this).data('name');
+  var price = Number($(this).data('price'));
+  var images = $(this).data('images');
+  var ids = $(this).data('ids');
+  var names = $(this).data('names');
+  shoppingCart.addItemToCart(id, name, price, 1, images, ids, names);
+  displayCart();
+});
+$('.wishlist-btn').click(function(event) {
+  var id = $(this).data('id');
+  var name = $(this).data('name');
+  var price = Number($(this).data('price'));
+  var images = $(this).data('images');
+  var ids = $(this).data('ids');
+  var names = $(this).data('names');
+  detailProduct.addItemToCart(id, name, price, 1, images, ids, names);
+});
+// Clear items
+$('.clear-cart').click(function() {
+  shoppingCart.clearCart();
+  displayCart();
+});
+
+
+function displayCart() {
+  var cartArray = shoppingCart.listCart();
+  var output = "";
+  for(var i in cartArray) {
+    output += "<tr>"
+      + "<td>" + cartArray[i].name + "</td>" 
+      + "<td>(" + cartArray[i].price + ")</td>"
+      + "<td><div class='input-group'><button class='minus-item input-group-addon btn btn-primary' data-id="+cartArray[i].id+" data-name=" + cartArray[i].name + ">-</button>"
+      + "<input type='number' class='item-count form-control' data-id="+cartArray[i].id+" data-name='" + cartArray[i].name + "' value='" + cartArray[i].count + "'>"
+      + "<button class='plus-item btn btn-primary input-group-addon' data-id="+cartArray[i].id+" data-name=" + cartArray[i].name + ">+</button></div></td>"
+      + "<td><button class='delete-item btn btn-danger' data-id="+cartArray[i].id+" data-name=" + cartArray[i].name + ">X</button></td>"
+      + " = " 
+      + "<td>" + cartArray[i].total + "</td>" 
+      +  "</tr>";
+  }
+  $('.show-cart').html(output);
+  $('.total-cart').html(shoppingCart.totalCart());
+  $('.total-count').html(shoppingCart.totalCount());
+}
+
+// Delete item button
+
+$('.show-cart').on("click", ".delete-item", function(event) {
+  var id = $(this).data('id')
+  shoppingCart.removeItemFromCartAll(id);
+  displayCart();
+})
+// -1
+$('.show-cart').on("click", ".minus-item", function(event) {
+  var id = $(this).data('id')
+  shoppingCart.removeItemFromCart(id);
+  displayCart();
+})
+// +1
+$('.show-cart').on("click", ".plus-item", function(event) {
+  var id = $(this).data('id')
+  shoppingCart.addItemToCart(id);
+  displayCart();
+})
+
+// Item count input
+$('.show-cart').on("change", ".item-count", function(event) {
+   var id = $(this).data('id');
+   var count = Number($(this).val());
+  shoppingCart.setCountForItem(id, count);
+  displayCart();
+});
+
+displayCart();
+
+
+//Kiem tra rang buoc nhap
+$(document).ready(function() {
+        //Khi bàn phím được nhấn và thả ra thì sẽ chạy phương thức này
+        $("#signupKH").validate({
+            rules: {
+                username: {
+                  minlength: 2
+                },
+                address: {
+                    minlength: 2
+                },
+                numberPhone: {
+                  minlength:10,
+                },
+                password :{
+                  minlength:4,
+                  equalTo: "#pass"
+                }
+
+            },
+            messages: {
+              username: {
+                  minlength: "Vui lòng nhập ít nhất 2 kí  tự"
+                },
+                address: {
+                    minlength: "Vui lòng nhập ít nhất 2 kí  tự"
+                },
+                numberPhone: {
+                  minlength:"Số điện thoại không hợp lệ"
+                },
+                password :{
+                  minlength:"Vui lòng nhập ít nhất 2 kí  tự",
+                  equalTo: "Mật khẩu không trùng"
+                }
+            }
+
+            
+        });
+        $("#signupDN").validate({
+            rules: {
+                username: {
+                  minlength: 2
+                },
+                address: {
+                    minlength: 2
+                },
+                numberPhone: {
+                  minlength:10,
+                },
+                password :{
+                  minlength:4,
+                  equalTo: "#password"
+                }
+
+            },
+            messages: {
+              username: {
+                  minlength: "Vui lòng nhập ít nhất 2 kí  tự"
+                },
+                address: {
+                    minlength: "Vui lòng nhập ít nhất 2 kí  tự"
+                },
+                numberPhone: {
+                  minlength:"Số điện thoại không hợp lệ"
+                },
+                password :{
+                  minlength:"Vui lòng nhập ít nhất 4 kí  tự",
+                  equalTo: "Mật khẩu không trùng"
+                }
+            }
+        });
+    });
+
+
+    </script>
+</body>
+</html>

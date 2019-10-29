@@ -1,0 +1,20 @@
+[
+    {
+        "idSupplier": 1,
+        "nameSupplier": "amazon",
+        "username": "supp001",
+        "password": "12345678",
+        "numberPhone" : "13135315",
+        "email": "supp@gmail.com",
+        "address": "nguyen thai son"
+    },
+    {
+        "idSupplier": 2,
+        "nameSupplier": "tiki",
+        "username": "supp002",
+        "password": "123456",
+        "numberPhone" : "13546879",
+        "email": "supplier@gmail.com",
+        "address": "22 nguyen son"
+    }
+]

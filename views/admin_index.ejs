@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        
+        <!-- Latest compiled and minified CSS & JS -->
+        <link rel="stylesheet" media="screen" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <script src="//code.jquery.com/jquery.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        
+        
+    </head>
+    <body>
+        <!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {box-sizing: border-box}
+
+/* Set height of body and the document to 100% */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+
+/* Style tab links */
+.tablink {
+  background-color: #333333;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 25%;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: black;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+
+.btn {
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 14px;
+  width: 25%;
+  border-color: none !important;
+}
+
+.btn:hover {
+  background-color: rgb(71, 74, 241);
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.content {
+  color: black;
+  display: none;
+  padding: 45px 0px;
+  height: 100%;
+}
+</style>
+</head>
+<body>
+<div style="height: 50px; width: 100%; background-color: #333333;">
+<button class="tablink" onclick="openPage('Home', this, '#222222')" id="defaultOpen" style="height: 50px;" >Quản lý tài khoản</button>
+<button class="tablink" onclick="openPage('News', this, '#222222')" style="height: 50px;">Quản lý danh mục</button>
+
+<a href="/logout" style="float: right; font-size: 16px; margin-right: 25px; margin-top: 15px; color: white;">Đăng xuất</a>
+
+  <a style="float: right; font-size: 16px; margin-right: 25px; margin-top: 15px; color: white;">Chào admin</a>
+  
+
+</div>
+<!--Quan ly san pham ----------------------------------------->
+<div id="Home" class="tabcontent">
+  <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10" style="margin-left: 8%;">
+  
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background-color:#333333; height: 45px;">
+    <h4 style=" color: white; padding-top:4px;" class="col-md-6">DANH SÁCH TÀI KHOẢN</h4>
+    <button id="doanhnghiep" onclick="openTable('tabledn', this, '#222222')" id="defaultOpen1" class="btn btn-primary col-md-3" style="height: 45px; width: 20%; float: right;">TÀI KHOẢN DOANH NGHIỆP</button>
+
+    <button id="khachhang" onclick="openTable('tablekh', this, '#222222')" class="btn btn-primary col-md-3" style="height: 45px; width: 20%; margin-right: 10px; float: right;">TÀI KHOẢN KHÁCH HÀNG</button>
+  </div>
+  <div id="tablekh" class="content">
+    <table id="kh" class="table table-bordered table-hover" style="border: 1px solid black;">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>TÊN TÀI KHOẢN</th>
+                <th>TÊN KHÁCH HÀNG</th>
+                <th>ĐỊA CHỈ</th>
+                <th>SỐ ĐIỆN THOẠI</th>
+                <th>EMAIL</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%var stt=0%>
+            <%for(let i = 0; i< tkkh.length; i++){%>
+            <tr>
+                <td><%=stt=stt+1%></td>
+                <td><%=tkkh[i].username%></td>
+                <td><%=tkkh[i].nameCustomer%></td>
+                <td><%=tkkh[i].address%></td>
+                <td><%=tkkh[i].numberPhone%></td>
+                <td><%=tkkh[i].email%></td>  
+            </tr>
+
+            <%}%>
+        </tbody>
+     
+    
+    </table>
+  </div>
+  <div id="tabledn" class="content">
+    <table id="kh" class="table table-bordered table-hover" style="border: 1px solid black;">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>TÊN TÀI KHOẢN</th>
+                <th>TÊN DOANH NGHIỆP</th>
+                <th>ĐỊA CHỈ</th>
+                <th>SỐ ĐIỆN THOẠI</th>
+                <th>EMAIL</th>
+            </tr>
+        </thead>
+        <tbody>
+          <%var stt=0%>
+          <%for(let i = 0; i< tkdn.length; i++){%>
+          <tr>
+              <td><%=stt=stt+1%></td>
+              <td><%=tkdn[i].username%></td>
+              <td><%=tkdn[i].nameSupplier%></td>
+              <td><%=tkdn[i].address%></td>
+              <td><%=tkdn[i].numberPhone%></td>
+              <td><%=tkdn[i].email%></td>  
+          </tr>
+
+          <%}%>
+        </tbody>
+     
+    
+    </table>
+  </div>
+</div>
+</div>
+<!--Quan ly danh muc ----------------------------------------->
+<div id="News" class="tabcontent">
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10" style="margin-left: 8%;">
+  
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background-color:#333333;">
+          <h4 style=" color: white;" class="col-md-8">DANH SÁCH DANH MỤC</h4>
+        </div>
+        
+          
+        <table id="kh" class="table table-bordered table-hover" style="border: 1px solid black;">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>TÊN DANH MỤC</th>
+                    </tr>
+                </thead>
+                <tbody class="hienthikh">
+                    <%var stt=0%>
+                    <%for(let i = 0; i< cate.length; i++){%>
+        
+                    <tr>
+                        <td><%=stt=stt+1%></td>
+                        <td><%=cate[i].nameCategory%></td>
+                        
+                    </tr>
+        
+                    <%}%>
+                </tbody>
+             
+            
+            </table>
+
+      </div>
+</div>
+
+
+   <script>
+       function openPage(pageName,elmnt,color) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+  document.getElementById(pageName).style.display = "block";
+  elmnt.style.backgroundColor = color;
+}
+
+function openTable(pageName,elmnt,color) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("content");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("btn");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+  document.getElementById(pageName).style.display = "block";
+  elmnt.style.backgroundColor = color;
+}
+   </script>
+</body>
+</html> 

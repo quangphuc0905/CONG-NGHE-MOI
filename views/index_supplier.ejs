@@ -259,7 +259,7 @@ table, th, td {
     </div>
     <div class="md-form mb-5">
         <label data-error="wrong" data-success="right" for="orangeForm-email">Description</label>
-      <input type="text" id="orangeForm-email" name="description" class="form-control validate" required="required">
+        <textarea rows="3" class="form-control validate" name="description" required="required"></textarea>
   </div>
       </div>
       <div class="modal-footer d-flex justify-content-center">
@@ -389,10 +389,13 @@ table, th, td {
         <input type="text" id="diachi" name="addressShip" value="" class="form-control validate" readonly>
     </div>
     
-    <div class="md-form mb-4">
-        <label data-error="wrong" data-success="right" for="orangeForm-email">Trạng thái</label>
-        <input type="text" id="trangthai" name="status" value="" class="form-control validate">
-
+    <div class="md-form mb-5">
+      <label data-error="wrong" data-success="right" for="orangeForm-email">Trạng thái</label>
+      <select class="form-control" name="status" id="trangthai">
+            <option id="aaaa" value="Chờ xử lý"> Chờ xử lý</option>
+            <option value="Đang giao"> Đang giao</option>
+            <option value="Hoàn tất"> Hoàn tất</option>
+      </select>
 </div>
     <div class="md-form mb-5">
         <label data-error="wrong" data-success="right" for="orangeForm-email">Ngày đặt</label>
@@ -410,15 +413,29 @@ table, th, td {
 <script>
     $('.submitdonhang').click(function(event) {
   document.getElementById('order').value = $(this).data('order');
-      // document.getElementById('idproduct').value = $(this).data('namep');
-      // document.getElementById('idsupplier').value = $(this).data('namep');
   document.getElementById('idorder').value = $(this).data('idorder');
   document.getElementById('tensanpham').value = $(this).data('namep');
   document.getElementById('soluongsanpham').value = $(this).data('quantity');
   document.getElementById('tenkhachhang').value = $(this).data('namc');
   document.getElementById('sodienthoai').value = $(this).data('sdt');
   document.getElementById('diachi').value = $(this).data('addr');
-  document.getElementById('trangthai').value = $(this).data('status');
+      if($(this).data('status')=="Chờ xử lý")
+      {
+        document.getElementById('trangthai').children[0].innerHTML = "Chờ xử lý";
+        document.getElementById('trangthai').children[1].innerHTML = "Đang giao";
+        document.getElementById('trangthai').children[2].innerHTML = "Hoàn tất";
+      }
+      else if($(this).data('status')=="Đang giao"){
+        document.getElementById('trangthai').children[1].innerHTML = "Chờ xử lý";
+        document.getElementById('trangthai').children[0].innerHTML = "Đang giao";
+        document.getElementById('trangthai').children[2].innerHTML = "Hoàn tất";
+      }
+      else if($(this).data('status')=="Hoàn tất"){
+        document.getElementById('trangthai').children[2].innerHTML = "Chờ xử lý";
+        document.getElementById('trangthai').children[1].innerHTML = "Đang giao";
+        document.getElementById('trangthai').children[0].innerHTML = "Hoàn tất";
+      }
+
   document.getElementById('ngaydat').value = $(this).data('orderd');
   console.log("chinh sua");
 });

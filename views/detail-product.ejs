@@ -148,15 +148,15 @@
 			<div class="row">
 				<div class="col-lg-4">
 					<div style="text-align: center; max-width: 70%;">
-						<img id="hinhanh" class="product-big-img" src="images/1.jpg" alt="">
+						<img id="hinhanh" class="product-big-img" alt="">
 					</div>
 				</div>
 				<div class="col-lg-8 product-details">
 					<h2 id="tensanpham" class="p-title"></h2>
-					<h3 id="giasanpham" class="p-price">$39.90</h3>
+					<h3 id="giasanpham" class="p-price"></h3>
 					
 					<div class="quantity">
-						<p>Quantity</p>
+						<p>số lượng</p>
                         <div class="pro-qty"><input id="soluongsp" type="text" value="1"></div>
 					</div>
 					<%var dem = uname%>
@@ -175,7 +175,7 @@
 							</div>
 							<div id="collapse1" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
 								<div class="panel-body">
-									<p id="des"></p>
+									<p id="mota"></p>
 								</div>
 							</div>
 						</div>
@@ -333,30 +333,8 @@
 		document.getElementById('giasanpham').innerHTML = b[dem-1].price+ " VND";
 		document.getElementById('soluongsp').innerHTML = b[dem-1].count;
 		document.getElementById('hinhanh').src = b[dem-1].images;
+		document.getElementById('mota').innerHTML = b[dem-1].description;
 		
-		
-		arrProduct = [];
-				var id = b[dem-1].id;
-				var name = b[dem-1].name;
-				var price = b[dem-1].price;
-				var count = b[dem-1].count;
-				var images = b[dem-1].images;
-				var ids = b[dem-1].ids;
-				var names = b[dem-1].names
-		
-		function Item( id, name, price, count, images, ids, names) {
-		this.id = id;
-		this.name = name;
-		this.price = price;
-		this.count = count;
-		this.images = images;
-		this.ids = ids;
-		this.names = names;
-	  }
-	  var item = new Item(id, name, price, count, images, ids, names);
-	  console.log(item);
-	arrProduct.push(item);
-	
 	</script>
 	</body>
 </html>

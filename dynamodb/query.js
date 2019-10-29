@@ -274,15 +274,22 @@ function signupSupp(idSupplier, nameSupplier, numberPhone, email, username, pass
     });
 }
 // kiểm tra username da ton tai hay chua
-function checkUserKHExist(req, res) {
-    var params4 = {
-        TableName: 'KHACH_HANG_TABLE'
-    };
-    var datakh = {};
-    return docClient.scan(params4, function(err, data){
-        res.write(data.Items);
-    })
-   
+async function checkUserKHExist(username) {
+   try{
+    var data = await docClient.scan({
+        TableName: 'KHACH_HANG_TABLE',
+        FilterExpression: 'username = :username',
+        ExpressionAttributeValues: {':username' : username}
+    }).promise();
+    console.log(data.Items);
+    if(data.Items.length>0)
+        return false;
+    return true;
+}
+catch(err){
+    console.log(err)
+    return false;
+}
 }
 // function xem và cập nhật tình trạng đơn hàng
 function updateOrder(order, status, idProduct, idSupplier, idCustomer, idOrder, quantity, nameCustomer, addressShip, numberPhoneCus, orderDate, res) {

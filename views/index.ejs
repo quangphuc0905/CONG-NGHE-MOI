@@ -158,10 +158,20 @@
         </div>
         
         <div class="md-form mb-4">
-          <input type="password" id="pass" name="passwor" class="form-control validate" placeholder="Mật khẩu" required="required">
+          <input type="password" id="pass" name="passwor" class="form-control validate" placeholder="Mật khẩu" maxlength="16" minlength="8" required="required" pattern="^[a-z0-9]+" title="Mật khẩu từ 8-16 ký tự, không chứa ký tự đặc biệt">
         </div>
         <div class="md-form mb-4">
-          <input type="password" name="password" class="form-control validate" placeholder="Nhập lại mật khẩu" required="required">
+          <input type="password" name="password" class="form-control validate" placeholder="Nhập lại mật khẩu" maxlength="16" minlength="8" required="required" oninput="check(this)">
+          <script language='javascript' type='text/javascript'>
+            function check(input) {
+                if (input.value != document.getElementById('pass').value) {
+                    input.setCustomValidity('Password Must be Matching.');
+                } else {
+                    // input is valid -- reset the error message
+                    input.setCustomValidity('');
+                }
+            }
+        </script>
         </div>
         <div class="md-form mb-4">
           <input type="text" name="nameCustomer"  class="form-control validate" placeholder="Họ và tên" required="required">
@@ -170,7 +180,7 @@
           <input type="email" name="email" class="form-control validate" placeholder="Email" required="required">
         </div>
         <div class="md-form mb-4">
-          <input type="number" name="numberPhone" class="form-control validate" placeholder="Số điện thoại" required="required">
+          <input type="text" name="numberPhone" class="form-control validate" placeholder="Số điện thoại" required="required" pattern="^[0][1-9][0-9]+" oninvalid="this.setCustomValidity('Vui lòng nhập đúng số điện thoại')" oninput="this.setCustomValidity('')">
         </div>
         <div class="md-form mb-4">
             <input type="text" name="address" class="form-control validate" placeholder="Địa chỉ" required="required">
@@ -210,7 +220,7 @@
           <input type="text" name="username" class="form-control validate" placeholder="Tên tài khoản" required="required">
         </div>
         <div class="md-form mb-4">
-          <input type="password" id="password" name="pass" class="form-control validate" placeholder="Mật khẩu" required="required">
+          <input type="password" name="pass" class="form-control validate" placeholder="Mật khẩu" required="required">
         </div>
         <div class="md-form mb-4">
           <input type="password" name="password" class="form-control validate" placeholder="Nhập lại mật khẩu" required="required">
@@ -271,8 +281,8 @@
                             <div class="pi-pic" style="position: relative; height: 400px; width: 250px;">
                                 <img src="<%=scanObject[i].images%>" alt="" style="position: absolute; height: 100%; width: 100%;">
                                 <div class="pi-links">
-                                    <a href="#" class="add-to-cart" data-toggle="modal" data-target="#cart" data-ids="<%= scanObject[i].idSupplier %>" data-names="<%= scanObject[i].nameSupplier %>" data-id="<%= scanObject[i].idProduct %>" data-name="<%= scanObject[i].nameProduct %>" data-price="<%= scanObject[i].price %>" data-images="<%= scanObject[i].images %>"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                                    <a href="/product" class="wishlist-btn" data-ids="<%= scanObject[i].idSupplier %>" data-names="<%= scanObject[i].nameSupplier %>" data-id="<%= scanObject[i].idProduct %>" data-name="<%= scanObject[i].nameProduct %>" data-price="<%= scanObject[i].price %>" data-images="<%= scanObject[i].images %>" ><i class="flaticon-refresh"></i></a>
+                                    <a href="#" class="add-to-cart" data-toggle="modal" data-target="#cart" data-descript="<%= scanObject[i].description %>" data-ids="<%= scanObject[i].idSupplier %>" data-names="<%= scanObject[i].nameSupplier %>" data-id="<%= scanObject[i].idProduct %>" data-name="<%= scanObject[i].nameProduct %>" data-price="<%= scanObject[i].price %>" data-images="<%= scanObject[i].images %>"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                                    <a href="/product" class="wishlist-btn" data-descript="<%= scanObject[i].description %>" data-ids="<%= scanObject[i].idSupplier %>" data-names="<%= scanObject[i].nameSupplier %>" data-id="<%= scanObject[i].idProduct %>" data-name="<%= scanObject[i].nameProduct %>" data-price="<%= scanObject[i].price %>" data-images="<%= scanObject[i].images %>" ><i class="flaticon-refresh"></i></a>
                                 </div>
                             </div>
                             <div class="pi-text">
@@ -285,9 +295,7 @@
                     
                 <% } %>
                 </div>
-                <div class="text-center pt-5">
-                    <button class="site-btn sb-line sb-dark">LOAD MORE</button>
-                </div>
+               
             </div>
         </section>
         <!--modal cart-->
@@ -464,12 +472,13 @@ var detailProduct = (function() {
   // =============================
   product = [];
   // Constructor
-  function Item( id, name, price, count, images, ids, names) {
+  function Item( id, name, price, count, images, description, ids, names) {
     this.id = id;
     this.name = name;
     this.price = price;
     this.count = count;
     this.images = images;
+    this.description = description;
     this.ids = ids;
     this.names = names;
   }
@@ -483,7 +492,7 @@ var detailProduct = (function() {
   var object = {};
   
   // Add to cart
-  object.addItemToCart = function(id, name, price, count, images, ids, names) {
+  object.addItemToCart = function(id, name, price, count, images, description, ids, names) {
     for(var item in product) {
       if(product[item].id === id) {
         product[item].count ++;
@@ -491,7 +500,7 @@ var detailProduct = (function() {
         return;
       }
     }
-    var item = new Item(id, name, price, count, images, ids, names);
+    var item = new Item(id, name, price, count, images, description, ids, names);
     product.push(item);
     saveCart();
   }
@@ -538,7 +547,7 @@ var shoppingCart = (function() {
   // =============================
   cart = [];
   // Constructor
-  function Item( id, name, price, count, images, ids, names) {
+  function Item( id, name, price, count, images, description, ids, names) {
     this.id = id;
     this.name = name;
     this.price = price;
@@ -567,7 +576,7 @@ var shoppingCart = (function() {
   var obj = {};
   
   // Add to cart
-  obj.addItemToCart = function(id, name, price, count, images, ids, names) {
+  obj.addItemToCart = function(id, name, price, count, images, description, ids, names) {
     for(var item in cart) {
       if(cart[item].id === id) {
         cart[item].count ++;
@@ -575,7 +584,7 @@ var shoppingCart = (function() {
         return;
       }
     }
-    var item = new Item(id, name, price, count, images, ids, names);
+    var item = new Item(id, name, price, count, images, description, ids, names);
     cart.push(item);
     saveCart();
   }
@@ -676,9 +685,10 @@ $('.add-to-cart').click(function(event) {
   var name = $(this).data('name');
   var price = Number($(this).data('price'));
   var images = $(this).data('images');
+  var description = $(this).data('descript');
   var ids = $(this).data('ids');
   var names = $(this).data('names');
-  shoppingCart.addItemToCart(id, name, price, 1, images, ids, names);
+  shoppingCart.addItemToCart(id, name, price, 1, images, description, ids, names);
   displayCart();
 });
 $('.wishlist-btn').click(function(event) {
@@ -686,9 +696,10 @@ $('.wishlist-btn').click(function(event) {
   var name = $(this).data('name');
   var price = Number($(this).data('price'));
   var images = $(this).data('images');
+  var description = $(this).data('descript');
   var ids = $(this).data('ids');
   var names = $(this).data('names');
-  detailProduct.addItemToCart(id, name, price, 1, images, ids, names);
+  detailProduct.addItemToCart(id, name, price, 1, images, description, ids, names);
 });
 // Clear items
 $('.clear-cart').click(function() {
@@ -751,7 +762,8 @@ displayCart();
 //Kiem tra rang buoc nhap
 $(document).ready(function() {
         //Khi bàn phím được nhấn và thả ra thì sẽ chạy phương thức này
-        $("#signupKH").validate({
+        
+        $("#signupDN").validate({
             rules: {
                 username: {
                   minlength: 2
@@ -779,48 +791,12 @@ $(document).ready(function() {
                   minlength:"Số điện thoại không hợp lệ"
                 },
                 password :{
-                  minlength:"Vui lòng nhập ít nhất 2 kí  tự",
-                  equalTo: "Mật khẩu không trùng"
-                }
-            }
-
-            
-        });
-        $("#signupDN").validate({
-            rules: {
-                username: {
-                  minlength: 2
-                },
-                address: {
-                    minlength: 2
-                },
-                numberPhone: {
-                  minlength:10,
-                },
-                password :{
-                  minlength:4,
-                  equalTo: "#password"
-                }
-
-            },
-            messages: {
-              username: {
-                  minlength: "Vui lòng nhập ít nhất 2 kí  tự"
-                },
-                address: {
-                    minlength: "Vui lòng nhập ít nhất 2 kí  tự"
-                },
-                numberPhone: {
-                  minlength:"Số điện thoại không hợp lệ"
-                },
-                password :{
                   minlength:"Vui lòng nhập ít nhất 4 kí  tự",
                   equalTo: "Mật khẩu không trùng"
                 }
             }
         });
     });
-
 
     </script>
 </body>

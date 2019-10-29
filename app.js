@@ -70,9 +70,9 @@ app.post('/supplier/create', function (req, res) {
 console.log(req.body, req.query)
   query.createItem(idProduct, nameProduct, idSupplier, nameSupplier, idCategory, price, images, description, res);
 })
-app.post('/signup', function (req, res) {
-    const {idCustomer, nameCustomer, numberPhone, email, username, password, address } = req.body
-    query.signup(idCustomer, nameCustomer, numberPhone, email, username, password, address, res);
+app.post('/signup', async function (req, res) {
+  const {idCustomer, nameCustomer, numberPhone, email, username, password, address } = req.body
+      query.signup(idCustomer, nameCustomer, numberPhone, email, username, password, address, res)
   })
   app.post('/signupdn', function (req, res) {
     const {idSupplier, nameSupplier, numberPhone, email, username, password, address } = req.body

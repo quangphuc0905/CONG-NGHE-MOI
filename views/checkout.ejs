@@ -59,7 +59,7 @@
 									<i class="flaticon-bag"></i>
 									<span id="soluong" class="total-count"></span>
 								</div>
-                <a href="#" data-toggle="modal" data-target="#cart">Cart</a>
+                <a href="" data-toggle="modal" data-target="#cart">Cart</a>
                 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cart">Cart (<span class="total-count"></span>)</button> -->
 							</div>
 						</div>
@@ -198,7 +198,7 @@
 						<div class="cf-title">Payment</div>
 						<ul class="payment-list">
 							<!-- <li>Paypal<a href="#"><input name="aa" type="radio"/></a></li> -->
-							<li>Thanh toán khi nhận hàng <input name="aa" type="radio"/></li>
+							<li>Thanh toán khi nhận hàng <input name="aa" type="radio" value="1" checked/></li>
 						</ul>
 						<button id="submitcheckout" class="site-btn submit-order-btn" data-toggle="modal" data-target="#myModal">Thanh Toán</button>
 					</form>
@@ -259,7 +259,6 @@
 			
 		}
 		}
-		
 		var k=0;
 		let arrId =[];
 		let arrCount = [];
@@ -348,10 +347,10 @@
 		}
 		})
 		$("#nextdonhang").click(function(e){
-			window.location.replace("http://localhost:8888/order");
+			window.location.replace("/order");
 		});
 		$("#nexthome").click(function(e){
-			window.location.replace("http://localhost:8888");
+			window.location.replace("/");
 		});
 	
   </script>

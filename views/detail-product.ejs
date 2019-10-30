@@ -11,7 +11,6 @@
 
 	<!-- Google Font -->
 
-
 	<!-- Stylesheets -->
 	<link rel="stylesheet" href="css/bootstrap.min.css"/>
 	<link rel="stylesheet" href="css/font-awesome.min.css"/>
@@ -148,7 +147,7 @@
 			<div class="row">
 				<div class="col-lg-4">
 					<div style="text-align: center; max-width: 70%;">
-						<img id="hinhanh" class="product-big-img" alt="">
+						<img id="hinhanh" class="product-big-img" src="" alt="">
 					</div>
 				</div>
 				<div class="col-lg-8 product-details">
@@ -157,12 +156,12 @@
 					
 					<div class="quantity">
 						<p>số lượng</p>
-                        <div class="pro-qty"><input id="soluongsp" type="text" value="1"></div>
+                        <div class="pro-qty"><input id="soluongsp" type="text" value=""></div>
 					</div>
 					<%var dem = uname%>
 					<%var demm = uname%>
 					<%if(!dem){%>
-						<a id="muahang" class="site-btn" data-toggle="modal" data-target="#myModal">MUA NGAY</a>
+						<a class="site-btn" data-toggle="modal" data-target="#myModal">MUA NGAY</a>
 					<%}%>
 					<%if(demm){%>
 						<a href="/checkout" id="muahang" class="site-btn">MUA NGAY</a>
@@ -331,10 +330,30 @@
 		var dem = b.length;
 		document.getElementById('tensanpham').innerHTML = b[dem-1].name;
 		document.getElementById('giasanpham').innerHTML = b[dem-1].price+ " VND";
-		document.getElementById('soluongsp').innerHTML = b[dem-1].count;
+		document.getElementById('soluongsp').value = b[dem-1].count;
 		document.getElementById('hinhanh').src = b[dem-1].images;
 		document.getElementById('mota').innerHTML = b[dem-1].description;
 		
+		function Item( id, name, price, count, images, description, ids, names) {
+			this.id = id;
+			this.name = name;
+			this.price = price;
+			this.count = count;
+			this.images = images;
+			this.description = description;
+			this.ids = ids;
+			this.names = names;
+		}
+		var countt = 0;
+		
+		var arr = [];
+		
+		$('#muahang').click(function(e){
+			countt = parseInt(document.getElementById('soluongsp').value) ;
+			var item = new Item(b[dem-1].id, b[dem-1].name, b[dem-1].price, countt, b[dem-1].images, b[dem-1].description, b[dem-1].ids, b[dem-1].names)
+			arr.push(item);
+			sessionStorage.setItem('detailProduct', JSON.stringify(arr));
+		})
 	</script>
 	</body>
 </html>

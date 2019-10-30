@@ -72,11 +72,26 @@ console.log(req.body, req.query)
 })
 app.post('/signup', async function (req, res) {
   const {idCustomer, nameCustomer, numberPhone, email, username, password, address } = req.body
-      query.signup(idCustomer, nameCustomer, numberPhone, email, username, password, address, res)
+  var a = await query.checkUserKHExist(req.body.username);
+  console.log(a + "------------------")
+  if(a ==true)
+  {
+    query.signup(idCustomer, nameCustomer, numberPhone, email, username, password, address, res)
+  }else{
+    res.render('err.ejs');
+  }
+      
   })
-  app.post('/signupdn', function (req, res) {
+  app.post('/signupdn', async function (req, res) {
     const {idSupplier, nameSupplier, numberPhone, email, username, password, address } = req.body
-    query.signupSupp(idSupplier, nameSupplier, numberPhone, email, username, password, address, res);
+    var a = await query.checkUserDNExist(req.body.username);
+    if(a==true)
+    {
+      query.signupSupp(idSupplier, nameSupplier, numberPhone, email, username, password, address, res);
+    }
+    else{
+      res.render('err.ejs');
+    }
   })
   app.post('/supplier/save', function (req, res) {
     const { idProduct, nameProduct, idSupplier, nameSupplier, idCategory, price, images, description } = req.body

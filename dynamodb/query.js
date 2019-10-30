@@ -291,6 +291,23 @@ catch(err){
     return false;
 }
 }
+async function checkUserDNExist(username) {
+    try{
+     var data = await docClient.scan({
+         TableName: 'NHA_CUNG_CAP_TABLE',
+         FilterExpression: 'username = :username',
+         ExpressionAttributeValues: {':username' : username}
+     }).promise();
+     console.log(data.Items);
+     if(data.Items.length>0)
+         return false;
+     return true;
+ }
+ catch(err){
+     console.log(err)
+     return false;
+ }
+ }
 // function xem và cập nhật tình trạng đơn hàng
 function updateOrder(order, status, idProduct, idSupplier, idCustomer, idOrder, quantity, nameCustomer, addressShip, numberPhoneCus, orderDate, res) {
   let params = {
@@ -336,5 +353,6 @@ module.exports = {
     updateItem: updateItem,
     createOrder:createOrder,
     checkUserKHExist: checkUserKHExist,
-    updateStatus :updateStatus
+    updateStatus :updateStatus,
+    checkUserDNExist: checkUserDNExist
 };

@@ -97,6 +97,23 @@ function deleteItem(idProduct, nameProduct, res) {
         res.end();
     });
 }
+function deleteOrder(order, idOrder, res) {
+    let params = {
+        TableName: 'DON_HANG_TABLE',
+        Key: {
+            "order": Number(order),
+            "idOrder": Number(idOrder)
+        }
+    };
+    docClient.delete(params, (err, data) => {
+        if (err) {
+            console.error("Unable to delete item. Error JSON:", JSON.stringify(err, null, 2));
+        } else {
+            res.writeHead(302, { 'Location': '/supplier/' });
+        }
+        res.end();
+    });
+}
 function createItem(idProduct, nameProduct, idSupplier, nameSupplier, idCategory, price, images, description, res) {
     let params = {
         TableName: 'SAN_PHAM_TABLE',
@@ -188,6 +205,33 @@ function updateStatus(order, idOrder, status, res) {
         res.end();
     })
 }
+function updateStatusCancel(order, idOrder, status, res) {
+    let params = {
+        TableName: 'DON_HANG_TABLE',
+        Key: {
+            "order": Number(order),
+            "idOrder": Number(idOrder)
+        },
+        UpdateExpression: "set #s = :status",
+        
+        ExpressionAttributeNames: {
+            '#s': 'status'
+        },
+        ExpressionAttributeValues: {
+            ':status': String(status)
+        },
+        ReturnValues: "UPDATED_NEW"
+    };
+    docClient.update(params, (err, data) => {
+        if (err) {
+            res.write('err');
+        } else {
+            res.writeHead(302, { 'Location': '/order' });
+        }
+        res.end();
+    })
+}
+
 function signup(idCustomer, nameCustomer, numberPhone, email, username, password, address, res) {
   let params = {
       TableName: 'KHACH_HANG_TABLE',
@@ -309,41 +353,7 @@ async function checkUserDNExist(username) {
  }
  }
 // function xem và cập nhật tình trạng đơn hàng
-function updateOrder(order, status, idProduct, idSupplier, idCustomer, idOrder, quantity, nameCustomer, addressShip, numberPhoneCus, orderDate, res) {
-  let params = {
-      TableName: 'SAN_PHAM',
-      Key: {
-          "idProduct": Number(idProduct),
-          "nameProduct": String(nameProduct)
-      },
-      UpdateExpression: "set #p = :price, #i = :images, #d = :description, #ids = :idSupplier, #n = :nameSupplier, #idc = :idCategory",
-      ExpressionAttributeNames: {
-          '#p': 'price',
-          '#i': 'images',
-          '#d': 'description',
-          '#ids': 'idSupplier',
-          '#n': 'nameSupplier',
-          '#idc': 'idCategory'
-      },
-      ExpressionAttributeValues: {
-          ':price': Number(price),
-          ':images': String(images),
-          ':description': String(description),
-          ':idSupplier': Number(idSupplier),
-          ':nameSupplier': String(nameSupplier),
-          ':idCategory': Number(idCategory)
-      },
-      ReturnValues: "UPDATED_NEW"
-  };
-  docClient.update(params, (err, data) => {
-      if (err) {
-          res.write('<h5 style="color:red;">All fields are required!</h5>');
-      } else {
-          res.writeHead(302, { 'Location': '/supplier' });
-      }
-      res.end();
-  })
-}
+
 module.exports = {
     searchItems: searchItems,
     deleteItem: deleteItem,
@@ -354,5 +364,7 @@ module.exports = {
     createOrder:createOrder,
     checkUserKHExist: checkUserKHExist,
     updateStatus :updateStatus,
-    checkUserDNExist: checkUserDNExist
+    checkUserDNExist: checkUserDNExist,
+    updateStatusCancel: updateStatusCancel,
+    deleteOrder : deleteOrder
 };

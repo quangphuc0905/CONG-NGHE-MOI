@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zxx">
 <head>
 	<title>Divisima | eCommerce</title>
 	<meta charset="UTF-8">
@@ -9,6 +9,9 @@
 	<!-- Favicon -->
 	<link href="img/favicon.ico" rel="shortcut icon"/>
 
+	
+	<!-- Latest compiled and minified CSS & JS -->
+	
 	<!-- Google Font -->
 	<!-- <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet"> -->
 	<!-- Stylesheets -->
@@ -122,26 +125,47 @@
 								<%for(let k =0;k < sps.length;k++){%>
 									<%if(lstSP[h].idProduct== sps[k].idProduct){%>
 										<%var tensp = sps[k].nameProduct%>
-										<%tongtien = tongtien + sps[k].price*lstSP[h].quantity%>
+										<%if(lstSP[h].status!="Đã hủy"){%>
+											<%tongtien = tongtien + sps[k].price*lstSP[h].quantity%>
+										<%}%>
 										<% break;%>
 									<%}%>
 								<%}%>	
-								<li class="list-group-item"><%=lstSP[h].quantity%> x <%=tensp%> <b style="float: right;"><%=lstSP[h].status%></b> </li>
+								<%if(lstSP[h].status=="Chờ xử lý" || lstSP[h].status=="Đã hủy"){%>
+								<form action="/order/cancel" method="POST">
+									<input type="text" value="<%=lstSP[h].order%>" name="order" style="display: none;"/>
+									<input type="text" value="<%=lstSP[h].idOrder%>" name="idOrder" style="display: none;"/>
+								<li class="list-group-item"><%=lstSP[h].quantity%> x <%=tensp%> <%=lstSP[h].order%>
+
+									 <button type="submit" style="float: right; background-color: red; color: white;">X</button>
+									  <b style="float: right; margin-right: 40px;"><%=lstSP[h].status%></b>
+								</li>
+								</form>
+								<%}%>
+								<%if(lstSP[h].status=="Đang giao"){%>
+									<li class="list-group-item"><%=lstSP[h].quantity%> x <%=tensp%> <%=lstSP[h].order%>
+
+										<button type="button" data-toggle="modal" data-target="#myModal" style="float: right; background-color: red; color: white;">X</button>
+										 <b style="float: right; margin-right: 40px;"><%=lstSP[h].status%></b>
+								   </li>
+								<%}%>
 							<%}%>
 						  </ul>
-            </div>
-            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="display: inline-block;">
+
+			</div>
+			
+			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="display: inline-block;">
                 <div style="height: 100%;">
 					 <ul style="display: inline-block;">
 						<br/>
                         <li style="list-style-type: none; text-align: center;">Tổng tiền: <b><%=tongtien%></b> VND </li>
 					</ul>
-                     <ul class="list-group" style="float: right; max-width: 15%; width: 15%; height: 100%; margin-right: -6%;">
-                                    <button class="btn btn-danger" style="height: 100%;width: 100%;color: white;background-color: red; border: none;  border-top-right-radius: 10px; border-bottom-right-radius: 10px;" >X</button>
-                    </ul>
-                </div>
+					
+				
+				</div>
+			
             </div>
-            
+		
 		</div>
 		
         <%}%>
@@ -149,7 +173,31 @@
             
         </div>
         
-    </div>
+	</div>
+
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog modal-sm">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h4 class="modal-title">Thông báo</h4>
+			</div>
+			<div class="modal-body">
+			  <h6>Sản phẩm đang được giao. Không thể hủy.</h6>
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  <script src="js/jquery-3.2.1.min.js"></script>
+	  <script src="js/bootstrap.min.js"></script>
+	  <script src="js/jquery.slicknav.min.js"></script>
+	  <script src="js/owl.carousel.min.js"></script>
+	  <script src="js/jquery.nicescroll.min.js"></script>
+	  <script src="js/jquery.zoom.min.js"></script>
+	  <script src="js/jquery-ui.min.js"></script>
+	  <script src="js/main.js"></script>
 </body>
 <script>
 	

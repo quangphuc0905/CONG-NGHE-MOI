@@ -99,18 +99,23 @@ table, th, td {
               <%}%>
               <%}%>
               <td><%=obj[i].price%></td>
-              <td><a href="#" class="chinhsua" style="margin-right: 15px; " data-toggle="modal" data-target="#modalRegisterFormUP" data-idp="<%=obj[i].idProduct%>" data-namep="<%=obj[i].nameProduct%>" data-idc="<%=obj[i].idCategory%>" data-price="<%=obj[i].price%>"
-                data-img="<%=obj[i].images%>" data-des="<%=obj[i].description%>">Chỉnh sửa</a>
-                <% var tontai = 0%>
-                <% for (var k = 0; k < order.length; k++) { %>
-                  <%if(order[k].idProduct==obj[i].idProduct){%>
-                    <%tontai ++%>
-                    <%}%>
-                <%}%>
+              <td>
+                  <% var tontai = 0%>
+                  <% for (var k = 0; k < order.length; k++) { %>
+                    <%if(order[k].idProduct==obj[i].idProduct){%>
+                      <%tontai ++%>
+                      <%}%>
+                  <%}%>
+                  
+                
+                
                 <%if(tontai==0){%>
+                  <a href="#" class="chinhsua" style="margin-right: 15px; " data-toggle="modal" data-target="#modalRegisterFormUP" data-idp="<%=obj[i].idProduct%>" data-namep="<%=obj[i].nameProduct%>" data-idc="<%=obj[i].idCategory%>" data-price="<%=obj[i].price%>"
+                    data-img="<%=obj[i].images%>" data-des="<%=obj[i].description%>">Chỉnh sửa</a>
                 <a href="/supplier/delete?idProduct=<%=obj[i].idProduct%>&nameProduct=<%=obj[i].nameProduct%>">Xóa</a>
                 <%}%>
                 <%if(tontai!=0){%>
+                  <a href="" style="margin-right: 15px; " data-toggle="modal" data-target="#myModalSua">Chỉnh sửa</a>
                   <a href="" data-toggle="modal" data-target="#myModal">Xóa</a>
                   <%}%>
               </td>
@@ -121,6 +126,24 @@ table, th, td {
   </table>
 
 </div>
+<!--modal thong bao khong the sua san pham-->
+<div class="modal fade" id="myModalSua" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Thông báo</h4>
+        </div>
+        <div class="modal-body">
+          <p>Sản phẩm đã được đặt hàng, không thể chỉnh sửa.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--modal thong bao khong the xoa san pham-->
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -128,7 +151,7 @@ table, th, td {
           <h4 class="modal-title">Thông báo</h4>
         </div>
         <div class="modal-body">
-          <p>Sản phẩm đã được đặt hàng, không thể xóa</p>
+          <p>Sản phẩm đã được đặt hàng, không thể xóa.</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -177,12 +200,18 @@ table, th, td {
                     <td><%=order[i].status%></td>
                     <% for (var t = 0; t < obj.length; t++) { %>
                       <%if(order[i].idProduct==obj[t].idProduct){%>
+                        <%if(order[i].status!="Đã hủy"){%>
                     <td><a href="" class="submitdonhang" data-idorder="<%=order[i].idOrder%>" data-order="<%=order[i].order%>" data-namep="<%=obj[t].nameProduct%>" data-quantity="<%=order[i].quantity%>"
                       data-namc="<%=order[i].nameCustomer%>" data-sdt="<%=order[i].numberPhoneCus%>" 
                       data-addr="<%=order[i].addressShip%>" data-status="<%=order[i].status%>" 
                       data-orderd="<%=order[i].orderDate%>" data-toggle="modal" data-target="#modalDetailOrder" >Xem chi tiết</a></td>
                       <% break; %>
                       <% } %>
+                      
+                      <%if(order[i].status == "Đã hủy"){%>
+                          <td><a href="/supplier/deleteorder?order=<%=order[i].order%>&idOrder=<%=order[i].idOrder%>">Xóa</a></td>
+                        <% } %>
+                        <% } %>
                 <% } %>
                 </tr>
                 <% } %>
@@ -287,7 +316,7 @@ table, th, td {
             <label data-error="wrong" data-success="right" for="orangeForm-name">Tên sản phẩm</label>
           <input type="text" id="namep" name="nameProduct" class="form-control validate" required="required" readonly>
         </div>
-        <div class="md-form mb-4" style="display: none;">
+        <div class="md-form mb-5" style="display: none;">
                 <select class="form-control" name="idCategory" id="sel1">
                       <option id="idc"></option>
                 </select>
@@ -321,7 +350,7 @@ table, th, td {
     <div class="md-form mb-5">
         <label data-error="wrong" data-success="right" for="orangeForm-email">Description</label>
 
-      <input type="text" id="des" name="description" class="form-control validate" required="required">
+        <textarea rows="3" id="des" class="form-control validate" name="description" required="required"></textarea>
   </div>
       </div>
       <div class="modal-footer d-flex justify-content-center">
@@ -421,23 +450,31 @@ table, th, td {
   document.getElementById('diachi').value = $(this).data('addr');
       if($(this).data('status')=="Chờ xử lý")
       {
+        document.getElementById('trangthai').removeAttribute("disabled");
         document.getElementById('trangthai').children[0].innerHTML = "Chờ xử lý";
         document.getElementById('trangthai').children[1].innerHTML = "Đang giao";
         document.getElementById('trangthai').children[2].innerHTML = "Hoàn tất";
       }
       else if($(this).data('status')=="Đang giao"){
-        document.getElementById('trangthai').children[1].innerHTML = "Chờ xử lý";
+        document.getElementById('trangthai').removeAttribute("disabled");
         document.getElementById('trangthai').children[0].innerHTML = "Đang giao";
+        document.getElementById('trangthai').children[1].innerHTML = "Chờ xử lý";
         document.getElementById('trangthai').children[2].innerHTML = "Hoàn tất";
       }
       else if($(this).data('status')=="Hoàn tất"){
+        document.getElementById('trangthai').removeAttribute("disabled");
+        document.getElementById('trangthai').children[0].innerHTML = "Hoàn tất";
         document.getElementById('trangthai').children[2].innerHTML = "Chờ xử lý";
         document.getElementById('trangthai').children[1].innerHTML = "Đang giao";
-        document.getElementById('trangthai').children[0].innerHTML = "Hoàn tất";
+        
+      }
+      else if($(this).data('status')=="Đã hủy"){
+        document.getElementById('trangthai').children[0].innerHTML = "Đã hủy";
+        document.getElementById('trangthai').setAttribute("disabled", "true");
       }
 
   document.getElementById('ngaydat').value = $(this).data('orderd');
-  console.log("chinh sua");
+ 
 });
   $('.chinhsua').click(function(event) {
   document.getElementById('idp').value = $(this).data('idp');

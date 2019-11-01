@@ -46,12 +46,16 @@ app.use('/supplier', index_supplierRouter);
 app.use('/order', index_order);
 app.use('/product', detail_product);
 app.use('/admin', admin);
-//app.use('/home', admin_index);
 
 app.use('/supplier/delete', function(req, res, next) {
   const {idProduct, nameProduct} = req.query
 
   query.deleteItem(idProduct, nameProduct, res);
+});
+app.use('/supplier/deleteorder', function(req, res, next) {
+  const {order, idOrder} = req.query
+
+  query.deleteOrder(order, idOrder, res);
 });
 
 app.post('/search', function (req, res) {
@@ -102,6 +106,11 @@ app.post('/signup', async function (req, res) {
     const { order, idOrder, status } = req.body
   console.log(req.body, req.query)
     query.updateStatus( order, idOrder, status, res);
+  })
+  app.post('/order/cancel', function (req, res) {
+    const { order, idOrder } = req.body
+  console.log(req.body, req.query)
+    query.updateStatusCancel( order, idOrder, "Đã hủy", res);
   })
   app.post('/create-order', function (req, res) {
     var a = 

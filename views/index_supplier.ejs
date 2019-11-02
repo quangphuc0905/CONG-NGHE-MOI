@@ -82,6 +82,7 @@ table, th, td {
               <th>TÊN SẢN PHẨM</th>
               <th>LOẠI SẢN PHẨM</th>
               <th>GIÁ SẢN PHẨM</th>
+              <th>TRẠNG THÁI</th>
               <th></th>
           </tr>
       </thead>
@@ -99,6 +100,7 @@ table, th, td {
               <%}%>
               <%}%>
               <td><%=obj[i].price%></td>
+              <td><%=obj[i].status%></td>
               <td>
                   <% var tontai = 0%>
                   <% for (var k = 0; k < order.length; k++) { %>
@@ -111,11 +113,12 @@ table, th, td {
                 
                 <%if(tontai==0){%>
                   <a href="#" class="chinhsua" style="margin-right: 15px; " data-toggle="modal" data-target="#modalRegisterFormUP" data-idp="<%=obj[i].idProduct%>" data-namep="<%=obj[i].nameProduct%>" data-idc="<%=obj[i].idCategory%>" data-price="<%=obj[i].price%>"
-                    data-img="<%=obj[i].images%>" data-des="<%=obj[i].description%>">Chỉnh sửa</a>
+                    data-img="<%=obj[i].images%>" data-des="<%=obj[i].description%>" data-sta="<%=obj[i].status%>">Chỉnh sửa</a>
                 <a href="/supplier/delete?idProduct=<%=obj[i].idProduct%>&nameProduct=<%=obj[i].nameProduct%>">Xóa</a>
                 <%}%>
                 <%if(tontai!=0){%>
-                  <a href="" style="margin-right: 15px; " data-toggle="modal" data-target="#myModalSua">Chỉnh sửa</a>
+                  <a href="#" class="chinhsuaz" style="margin-right: 15px; " data-toggle="modal" data-target="#modalchinhsua" data-idp="<%=obj[i].idProduct%>" data-namep="<%=obj[i].nameProduct%>" data-idc="<%=obj[i].idCategory%>" data-price="<%=obj[i].price%>"
+                    data-img="<%=obj[i].images%>" data-des="<%=obj[i].description%>" data-sta="<%=obj[i].status%>">Chỉnh sửa</a>
                   <a href="" data-toggle="modal" data-target="#myModal">Xóa</a>
                   <%}%>
               </td>
@@ -290,9 +293,82 @@ table, th, td {
         <label data-error="wrong" data-success="right" for="orangeForm-email">Mô tả</label>
         <textarea rows="3" class="form-control validate" name="description" required="required"></textarea>
   </div>
+  <div class="md-form mb-5" style="display: none;">
+      <label data-error="wrong" data-success="right" for="orangeForm-email">status</label>
+      <input class="form-control validate" name="status" value="Đăng bán"  required="required">
+</div>
       </div>
       <div class="modal-footer d-flex justify-content-center">
           <input class="btn btn-primary" type="submit" value="Thêm">
+        </div>
+    </form>
+      
+    </div>
+  </div>
+</div>
+<!--modal chinh sua san pham da ton tai don hang-->
+<div class="modal fade" id="modalchinhsua" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Chỉnh sửa sản phẩm</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/supplier/save" method="POST">
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+            <label data-error="wrong" data-success="right" for="orangeForm-name">Tên sản phẩm</label>
+          <input type="text" id="namepz" name="nameProduct" class="form-control validate" required="required" readonly>
+        </div>
+        <div class="md-form mb-5" style="display: none;">
+                <select class="form-control" name="idCategory" id="sel1z">
+                      <option id="idcz"></option>
+                </select>
+            <label data-error="wrong" data-success="right" for="orangeForm-email">Loại sản phẩm</label>
+        </div>
+        <div class="md-form mb-5">
+            <label data-error="wrong" data-success="right" for="orangeForm-email">Giá</label>
+
+          <input type="number" id="pricez" name="price" class="form-control validate" required="required" readonly>
+        </div>
+        <div class="md-form mb-5">
+            <label data-error="wrong" data-success="right" for="orangeForm-email">Hình ảnh</label>
+
+                <input type="text" id="imgz" name="images" class="form-control validate" required="required" readonly>
+         </div>
+
+         <div class="md-form mb-5" style="display: none;">
+            <label data-error="wrong" data-success="right" for="orangeForm-email">IdProduct</label>
+
+            <input type="text" id="idpz" name="idProduct" class="form-control validate" >
+     </div>
+
+    <div class="md-form mb-5" style="display: none;">
+        <input type="text" id="idsz" name="idSupplier" value="<%=supp[0].idSupplier%>" class="form-control validate">
+        <label data-error="wrong" data-success="right" for="orangeForm-email">IdSupplier</label>
+    </div>
+    <div class="md-form mb-5" style="display: none;">
+        <input type="text" id="namesz" name="nameSupplier" value="<%=supp[0].nameSupplier%>" class="form-control validate">
+        <label data-error="wrong" data-success="right" for="orangeForm-email">nameSupplier</label>
+    </div>
+    <div class="md-form mb-5">
+        <label data-error="wrong" data-success="right" for="orangeForm-email">Mô tả</label>
+
+        <textarea rows="3" id="desz" class="form-control validate" name="description" required="required"></textarea>
+  </div>
+  <div class="md-form mb-5">
+      <label data-error="wrong" data-success="right" for="orangeForm-email">Trạng thái</label>
+      <select class="form-control" name="status" id="trangthaispz">
+            <option value="Đăng bán"> Đăng bán</option>
+            <option value="Ngừng bán"> Ngừng bán</option>
+      </select>
+</div>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+          <input class="btn btn-primary" type="submit" value="Cập nhật">
         </div>
     </form>
       
@@ -352,6 +428,13 @@ table, th, td {
 
         <textarea rows="3" id="des" class="form-control validate" name="description" required="required"></textarea>
   </div>
+  <div class="md-form mb-5">
+      <label data-error="wrong" data-success="right" for="orangeForm-email">Trạng thái</label>
+      <select class="form-control" name="status" id="trangthaisp">
+            <option value="Đăng bán"> Đăng bán</option>
+            <option value="Ngừng bán"> Ngừng bán</option>
+      </select>
+</div>
       </div>
       <div class="modal-footer d-flex justify-content-center">
           <input class="btn btn-primary" type="submit" value="Cập nhật">
@@ -490,9 +573,35 @@ table, th, td {
   document.getElementById('price').value = $(this).data('price');
   document.getElementById('img').value = $(this).data('img');
   document.getElementById('des').value = $(this).data('des');
+  if($(this).data('sta')=="Đăng bán")
+      {
+        document.getElementById('trangthaisp').children[0].innerHTML = "Đăng bán";
+        document.getElementById('trangthaisp').children[1].innerHTML = "Ngừng bán";
+      }
+      else if($(this).data('sta')=="Ngừng bán"){
+        document.getElementById('trangthaisp').children[0].innerHTML = "Ngừng bán";
+        document.getElementById('trangthaisp').children[1].innerHTML = "Đăng bán";
+      }
   console.log("chinh sua");
 });
-
+$('.chinhsuaz').click(function(event) {
+  document.getElementById('idpz').value = $(this).data('idp');
+  document.getElementById('namepz').value = $(this).data('namep');
+  document.getElementById('idcz').value = $(this).data('idc');
+  document.getElementById('pricez').value = $(this).data('price');
+  document.getElementById('imgz').value = $(this).data('img');
+  document.getElementById('desz').value = $(this).data('des');
+  if($(this).data('sta')=="Đăng bán")
+      {
+        document.getElementById('trangthaispz').children[0].innerHTML = "Đăng bán";
+        document.getElementById('trangthaispz').children[1].innerHTML = "Ngừng bán";
+      }
+      else if($(this).data('sta')=="Ngừng bán"){
+        document.getElementById('trangthaispz').children[0].innerHTML = "Ngừng bán";
+        document.getElementById('trangthaispz').children[1].innerHTML = "Đăng bán";
+      }
+  console.log("chinh sua");
+});
 function openPage(pageName,elmnt,color) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");

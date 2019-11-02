@@ -277,6 +277,7 @@
                 <div class="row">
                     <style>.pi-pic .resized{ height: 300px;}</style>
                     <% for (var i = 0; i < scanObject.length; i++) { %>
+                      <%if(scanObject[i].status == "Đăng bán"){%>
                     <div class="col-lg-3 col-sm-6">
                         <div class="product-item">
                             <div class="pi-pic" style="position: relative; height: 400px; width: 250px;">
@@ -293,7 +294,7 @@
                         </div>
                     </div>
                   
-                    
+                    <% } %>
                 <% } %>
                 </div>
                

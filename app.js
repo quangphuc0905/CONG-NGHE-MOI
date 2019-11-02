@@ -76,9 +76,9 @@ app.post('/search', function (req, res) {
 })
 
 app.post('/supplier/create', function (req, res) {
-  const { idProduct, nameProduct, idSupplier, nameSupplier, idCategory, price, images, description } = req.body
+  const { idProduct, nameProduct, idSupplier, nameSupplier, idCategory, price, images, description, status } = req.body
 console.log(req.body, req.query)
-  query.createItem(idProduct, nameProduct, idSupplier, nameSupplier, idCategory, price, images, description, res);
+  query.createItem(idProduct, nameProduct, idSupplier, nameSupplier, idCategory, price, images, description, status, res);
 })
 // app.post('/admin/signinn/add', function (req, res) {
 //   const { idCategory, nameCategory } = req.body
@@ -109,9 +109,9 @@ app.post('/signup', async function (req, res) {
     }
   })
   app.post('/supplier/save', function (req, res) {
-    const { idProduct, nameProduct, idSupplier, nameSupplier, idCategory, price, images, description } = req.body
+    const { idProduct, nameProduct, idSupplier, nameSupplier, idCategory, price, images, description, status } = req.body
   console.log(req.body, req.query)
-    query.updateItem(idProduct, nameProduct, idSupplier, nameSupplier, idCategory, price, images, description, res);
+    query.updateItem(idProduct, nameProduct, idSupplier, nameSupplier, idCategory, price, images, description,status, res);
   })
   app.post('/supplier/update', function (req, res) {
     const { order, idOrder, status } = req.body

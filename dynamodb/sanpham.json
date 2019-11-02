@@ -7,7 +7,8 @@
         "idCategory" : 1,
         "price" : 100000,
         "images" : "https://i.pinimg.com/236x/a9/b1/97/a9b197dcc832ddc652c30c644b5a2381--funny-phone-wallpaper-iphone-wallpaper-whale.jpg",
-        "description": "áo siêu đẹp"
+        "description": "áo siêu đẹp",
+        "status": "Đăng bán"
     },
     {
         "idProduct" : 2,
@@ -17,7 +18,8 @@
         "idCategory" : 1,
         "price" : 100000,
         "images" : "https://i.pinimg.com/236x/a9/b1/97/a9b197dcc832ddc652c30c644b5a2381--funny-phone-wallpaper-iphone-wallpaper-whale.jpg",
-        "description": "áo siêu đẹp"
+        "description": "áo siêu đẹp",
+        "status": "Đăng bán"
     },
     {
         "idProduct" : 3,
@@ -27,7 +29,8 @@
         "idCategory" : 1,
         "price" : 100000,
         "images" : "https://i.pinimg.com/236x/a9/b1/97/a9b197dcc832ddc652c30c644b5a2381--funny-phone-wallpaper-iphone-wallpaper-whale.jpg",
-        "description": "áo siêu đẹp"
+        "description": "áo siêu đẹp",
+        "status": "Đăng bán"
     },
     {
         "idProduct" : 4,
@@ -37,7 +40,8 @@
         "idCategory" : 1,
         "price" : 200000,
         "images" : "https://i.pinimg.com/236x/a9/b1/97/a9b197dcc832ddc652c30c644b5a2381--funny-phone-wallpaper-iphone-wallpaper-whale.jpg",
-        "description": "áo siêu đẹp"
+        "description": "áo siêu đẹp",
+        "status": "Đăng bán"
     },
     {
         "idProduct" : 5,
@@ -47,6 +51,7 @@
         "idCategory" : 3,
         "price" : 100000,
         "images" : "https://i.pinimg.com/236x/a9/b1/97/a9b197dcc832ddc652c30c644b5a2381--funny-phone-wallpaper-iphone-wallpaper-whale.jpg",
-        "description": "áo siêu đẹp"
+        "description": "áo siêu đẹp",
+        "status": "Đăng bán"
     }
 ]

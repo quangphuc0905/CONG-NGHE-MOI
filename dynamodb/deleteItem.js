@@ -1,8 +1,9 @@
 var AWS = require('aws-sdk');
 const fs = require('fs');
 AWS.config.loadFromPath('./awsConfig.json');
-
+let dynamodb = new AWS.DynamoDB();
 let docClient = new AWS.DynamoDB.DocumentClient();
+
 let allProduct = JSON.parse(fs.readFileSync(__dirname + '/sanpham.json', 'utf-8'));
 allProduct.forEach((product) => {
     let params = {
@@ -15,7 +16,8 @@ allProduct.forEach((product) => {
             "idCategory" : product.idCategory,
             "price" : product.price,
             "images" : product.images,
-            "description": product.description
+            "description": product.description,
+            "status": product.status
         }
     };
     docClient.put(params, (err, data) => {

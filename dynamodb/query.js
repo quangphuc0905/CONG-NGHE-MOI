@@ -194,7 +194,7 @@ function deleteOrder(order, idOrder, res) {
         res.end();
     });
 }
-function createItem(idProduct, nameProduct, idSupplier, nameSupplier, idCategory, price, images, description, res) {
+function createItem(idProduct, nameProduct, idSupplier, nameSupplier, idCategory, price, images, description, status, res) {
     let params = {
         TableName: 'SAN_PHAM_TABLE',
         Item: {
@@ -205,7 +205,8 @@ function createItem(idProduct, nameProduct, idSupplier, nameSupplier, idCategory
             idCategory: Number(idCategory),
             price: Number(price),
             images: String(images),
-            description: String(description)
+            description: String(description),
+            status:String(status)
         }
         
     };
@@ -245,21 +246,22 @@ function createCategory(idCategory, nameCategory, res) {
         res.end();
     });
 }
-function updateItem(idProduct, nameProduct, idSupplier, nameSupplier, idCategory, price, images, description, res) {
+function updateItem(idProduct, nameProduct, idSupplier, nameSupplier, idCategory, price, images, description, status, res) {
     let params = {
         TableName: 'SAN_PHAM_TABLE',
         Key: {
             "idProduct": Number(idProduct),
             "nameProduct": String(nameProduct)
         },
-        UpdateExpression: "set #p = :price, #i = :images, #d = :description, #ids = :idSupplier, #n = :nameSupplier, #idc = :idCategory",
+        UpdateExpression: "set #p = :price, #i = :images, #d = :description, #ids = :idSupplier, #n = :nameSupplier, #idc = :idCategory, #sta = :status",
         ExpressionAttributeNames: {
             '#p': 'price',
             '#i': 'images',
             '#d': 'description',
             '#ids': 'idSupplier',
             '#n': 'nameSupplier',
-            '#idc': 'idCategory'
+            '#idc': 'idCategory',
+            '#sta': 'status'
         },
         ExpressionAttributeValues: {
             ':price': Number(price),
@@ -267,7 +269,8 @@ function updateItem(idProduct, nameProduct, idSupplier, nameSupplier, idCategory
             ':description': String(description),
             ':idSupplier': Number(idSupplier),
             ':nameSupplier': String(nameSupplier),
-            ':idCategory': Number(idCategory)
+            ':idCategory': Number(idCategory),
+            ':status': String(status)
         },
         ReturnValues: "UPDATED_NEW"
     };

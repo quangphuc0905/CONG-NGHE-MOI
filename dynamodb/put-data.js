@@ -17,7 +17,8 @@ allProduct.forEach((product) => {
             "idCategory" : product.idCategory,
             "price" : product.price,
             "images" : product.images,
-            "description": product.description
+            "description": product.description,
+            "status": product.status
         }
     };
     docClient.put(params, (err, data) => {

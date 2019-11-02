@@ -201,7 +201,7 @@ table, th, td {
                     <% for (var t = 0; t < obj.length; t++) { %>
                       <%if(order[i].idProduct==obj[t].idProduct){%>
                         <%if(order[i].status!="Đã hủy"){%>
-                    <td><a href="" class="submitdonhang" data-idorder="<%=order[i].idOrder%>" data-order="<%=order[i].order%>" data-namep="<%=obj[t].nameProduct%>" data-quantity="<%=order[i].quantity%>"
+                    <td><a href="" class="submitdonhang" data-tongtien="<%=order[i].quantity*obj[t].price%>" data-idorder="<%=order[i].idOrder%>" data-order="<%=order[i].order%>" data-namep="<%=obj[t].nameProduct%>" data-quantity="<%=order[i].quantity%>"
                       data-namc="<%=order[i].nameCustomer%>" data-sdt="<%=order[i].numberPhoneCus%>" 
                       data-addr="<%=order[i].addressShip%>" data-status="<%=order[i].status%>" 
                       data-orderd="<%=order[i].orderDate%>" data-toggle="modal" data-target="#modalDetailOrder" >Xem chi tiết</a></td>
@@ -287,7 +287,7 @@ table, th, td {
         <label data-error="wrong" data-success="right" for="orangeForm-email">nameSupplier</label>
     </div>
     <div class="md-form mb-5">
-        <label data-error="wrong" data-success="right" for="orangeForm-email">Description</label>
+        <label data-error="wrong" data-success="right" for="orangeForm-email">Mô tả</label>
         <textarea rows="3" class="form-control validate" name="description" required="required"></textarea>
   </div>
       </div>
@@ -348,7 +348,7 @@ table, th, td {
         <label data-error="wrong" data-success="right" for="orangeForm-email">nameSupplier</label>
     </div>
     <div class="md-form mb-5">
-        <label data-error="wrong" data-success="right" for="orangeForm-email">Description</label>
+        <label data-error="wrong" data-success="right" for="orangeForm-email">Mô tả</label>
 
         <textarea rows="3" id="des" class="form-control validate" name="description" required="required"></textarea>
   </div>
@@ -404,6 +404,11 @@ table, th, td {
           <input type="number" id="soluongsanpham" name="quantity" class="form-control validate" required="required" readonly>
         </div>
         <div class="md-form mb-5">
+            <div class="md-form mb-5">
+                <label data-error="wrong" data-success="right" for="orangeForm-email">Tổng tiền</label>
+              <input type="text" id="tongtien" name="tongtien" class="form-control validate" required="required" readonly>
+            </div>
+            <div class="md-form mb-5">
             <label data-error="wrong" data-success="right" for="orangeForm-email">Tên khách hàng</label>
                 <input type="text" id="tenkhachhang" name="nameCustomer" class="form-control validate" required="required" readonly>
          </div>
@@ -414,7 +419,7 @@ table, th, td {
      </div>
 
     <div class="md-form mb-5">
-        <label data-error="wrong" data-success="right" for="orangeForm-email">Địa chỉ</label>
+        <label data-error="wrong" data-success="right" for="orangeForm-email">Địa chỉ giao hàng</label>
         <input type="text" id="diachi" name="addressShip" value="" class="form-control validate" readonly>
     </div>
     
@@ -432,7 +437,8 @@ table, th, td {
   </div>
       </div>
       <div class="modal-footer d-flex justify-content-center">
-          <input class="btn btn-primary" type="submit" value="Cập nhật">
+          <button class="btn btn-primary" data-dismiss="modal">Close</button>
+          <button class="btn btn-primary" type="submit">Cập nhật</button>
         </div>
     </form>
       
@@ -444,6 +450,7 @@ table, th, td {
   document.getElementById('order').value = $(this).data('order');
   document.getElementById('idorder').value = $(this).data('idorder');
   document.getElementById('tensanpham').value = $(this).data('namep');
+  document.getElementById('tongtien').value = $(this).data('tongtien') + "VNĐ";
   document.getElementById('soluongsanpham').value = $(this).data('quantity');
   document.getElementById('tenkhachhang').value = $(this).data('namc');
   document.getElementById('sodienthoai').value = $(this).data('sdt');

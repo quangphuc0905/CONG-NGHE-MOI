@@ -22,12 +22,37 @@ var paramsProducts = {
         {
             AttributeName: 'nameProduct',
             AttributeType: 'S' // (S | N | B) for string, number, binary
+        },
+        {
+            AttributeName: 'idCategory',
+            AttributeType: 'N' // (S | N | B) for string, number, binary
         }
     ],
     ProvisionedThroughput: { // required provisioned throughput for the table
         ReadCapacityUnits: 4, 
         WriteCapacityUnits: 1
-    }
+    },
+    GlobalSecondaryIndexes :[{
+            IndexName: 'SANPHAM_LOAISP', 
+            KeySchema: [
+                { 
+                    AttributeName: 'idCategory',
+                    KeyType: 'HASH'
+                },
+                { 
+                    AttributeName: 'idProduct',
+                    KeyType: 'RANGE'
+                }
+            ],
+            Projection: { 
+                ProjectionType: 'ALL', 
+          
+            },
+            ProvisionedThroughput: {
+                ReadCapacityUnits: 2,
+                WriteCapacityUnits: 1,
+            },  
+    }]
     
 };
 dynamodb.createTable(paramsProducts, function(err, data) {

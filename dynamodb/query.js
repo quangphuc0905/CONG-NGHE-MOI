@@ -97,6 +97,86 @@ function deleteItem(idProduct, nameProduct, res) {
         res.end();
     });
 }
+function searchCategory(idCategory, req, res) {
+    let params = {
+        TableName: 'SAN_PHAM_TABLE',
+        IndexName: 'SANPHAM_LOAISP',
+        KeyConditionExpression: '#idc = :c1', // a string representing a constraint on the attribute
+        ExpressionAttributeNames: { // a map of substitutions for attribute names with special characters
+                '#idc': 'idCategory'
+        },
+        ExpressionAttributeValues: { // a map of substitutions for all attribute values
+                ':c1': Number(idCategory)
+        },
+        ScanIndexForward: false,
+        ReturnConsumedCapacity: 'TOTAL',
+    };
+    var params1 = {
+        TableName: "LOAI_SP_TABLE"
+      };
+      var params2 = {
+        TableName: "NHA_CUNG_CAP_TABLE"
+      };
+      var params3 = {
+        TableName: "KHACH_HANG_TABLE"
+      };
+        docClient.scan(params3, (err, data3) => {
+            if (err) {
+                console.log(err);
+            } 
+             let sess = req.session;
+            console.log(req.session);
+            if(sess.user) {
+                console.log("Yes");
+                docClient.scan(params3, function(err, data3){
+                  if(err){
+                    console.log(JSON.stringify(err));
+                  }
+                  else{
+                    docClient.scan(params2, function(err, data2){
+                      if(err){
+                        console.log(JSON.stringify(err));
+                      }
+                      else{
+                        docClient.scan(params1, function(err, data1){
+                          if(err){
+                            console.log(JSON.stringify(err));
+                          }
+                          else{
+                              res.render('index.ejs', { scanObject: data.Items, uname: sess.user, cate: data1.Items, supp:data2.Items, khs: data3.Items });
+                          }
+                        })              }
+                    })
+                  }
+                })
+              }
+              else {
+                console.log("No");
+                docClient.scan(params1, function(err, data1){
+                  if(err){
+                    console.log(JSON.stringify(err));
+                  }
+                  else{
+                    docClient.scan(params2, function(err, data2){
+                      if(err){
+                        console.log(JSON.stringify(err));
+                      }
+                      else{
+                        docClient.query(params, function(err, data){
+                          if(err){
+                            console.log(JSON.stringify(err));
+                          }
+                          else{
+                              console.log(data.Items+"data items")
+                              res.render('index.ejs', { scanObject: data.Items, uname: null, cate: data1.Items, supp:data2.Items, khs: data3.Items });
+                          }
+                        })              }
+                    })
+                  }
+                })
+              }
+        });
+}
 function deleteOrder(order, idOrder, res) {
     let params = {
         TableName: 'DON_HANG_TABLE',
@@ -138,6 +218,28 @@ function createItem(idProduct, nameProduct, idSupplier, nameSupplier, idCategory
         else {
             
             res.writeHead(302, { 'Location': '/supplier'});
+            
+        }
+        res.end();
+    });
+}
+function createCategory(idCategory, nameCategory, res) {
+    let params = {
+        TableName: 'LOAI_SP_TABLE',
+        Item: {
+            idCategory: Number(idCategory),
+            nameCategory: String(nameCategory)
+        }
+        
+    };
+    docClient.put(params, (err, data) => {
+        if (err) {
+            res.writeHead(302, { 'Location': '/admin/signinn' }, "Thêm thất bại");
+            res.write('Thêm thất bại');
+        }
+        else {
+            
+            res.writeHead(302, { 'Location': '/admin/signinn'});
             
         }
         res.end();
@@ -366,5 +468,7 @@ module.exports = {
     updateStatus :updateStatus,
     checkUserDNExist: checkUserDNExist,
     updateStatusCancel: updateStatusCancel,
-    deleteOrder : deleteOrder
+    deleteOrder : deleteOrder,
+    searchCategory: searchCategory,
+    createCategory :createCategory
 };

@@ -162,11 +162,10 @@ body, html {
 <div id="News" class="tabcontent">
     <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10" style="margin-left: 8%;">
   
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background-color:#333333;">
-          <h4 style=" color: white;" class="col-md-8">DANH SÁCH DANH MỤC</h4>
-        </div>
-        
-          
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background-color:#333333; height: 45px;">
+            <h4 style=" color: white; padding-top:4px;" class="col-md-6">DANH SÁCH TÀI KHOẢN</h4>
+            <!-- <button class="btn btn-primary col-md-3" data-toggle="modal" data-target="#modalAddCate" style="height: 45px; width: 20%; float: right;">THÊM DANH MỤC</button> -->
+          </div>
         <table id="kh" class="table table-bordered table-hover" style="border: 1px solid black;">
                 <thead>
                     <tr>
@@ -192,7 +191,41 @@ body, html {
 
       </div>
 </div>
-
+<div class="modal fade" id="modalAddCate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Thêm danh mục</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/admin/signinn/add" method="POST">
+        <%var max = cate[0].idCategory%>
+        <% for (var i = 1; i < cate.length; i++) { %>
+             <%if(max < cate[i].idCategory){%>
+               <%max = cate[i].idCategory;%>
+             <% } %>
+         <% } %>
+      <div class="modal-body mx-3">
+          <div class="md-form mb-5" style="display: none;">
+              <label data-error="wrong" data-success="right" for="orangeForm-name">id danh mục</label>
+            <input type="text" id="orangeForm-name" name="idCategory" value="<%=max+1%>" class="form-control validate" required="required">
+        </div>
+        <div class="md-form mb-5">
+            <label data-error="wrong" data-success="right" for="orangeForm-name">Tên danh mục</label>
+          <input type="text" id="orangeForm-name" name="nameCategory" class="form-control validate" required="required">
+      </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-center" style="text-align: center;">
+          <input class="btn btn-primary" type="submit" value="Thêm" style="float: right;">
+        </div>
+    </form>
+      
+    </div>
+  </div>
+</div>
 
    <script>
        function openPage(pageName,elmnt,color) {

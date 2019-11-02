@@ -46,6 +46,7 @@ app.use('/supplier', index_supplierRouter);
 app.use('/order', index_order);
 app.use('/product', detail_product);
 app.use('/admin', admin);
+//app.use('/admin/signinn',admin_index)
 
 app.use('/supplier/delete', function(req, res, next) {
   const {idProduct, nameProduct} = req.query
@@ -57,7 +58,12 @@ app.use('/supplier/deleteorder', function(req, res, next) {
 
   query.deleteOrder(order, idOrder, res);
 });
-
+app.use('/category', function(req, res, next) {
+  const {idCategory} = req.query
+  console.log(req.query+"idcategory")
+  console.log(idCategory+"idcategory")
+  query.searchCategory(idCategory, req, res);
+});
 app.post('/search', function (req, res) {
   const { nameProduct } = req.body
   if (!nameProduct) {
@@ -74,6 +80,11 @@ app.post('/supplier/create', function (req, res) {
 console.log(req.body, req.query)
   query.createItem(idProduct, nameProduct, idSupplier, nameSupplier, idCategory, price, images, description, res);
 })
+// app.post('/admin/signinn/add', function (req, res) {
+//   const { idCategory, nameCategory } = req.body
+// console.log(req.body, req.query)
+//   query.createCategory( idCategory, nameCategory, res);
+// })
 app.post('/signup', async function (req, res) {
   const {idCustomer, nameCustomer, numberPhone, email, username, password, address } = req.body
   var a = await query.checkUserKHExist(req.body.username);

@@ -41,7 +41,7 @@
 							<button type="submit"><i class="flaticon-search"></i></button>
 						</form>
 					</div>
-					<div class="col-xl-3 col-lg-3">
+					<div class="col-xl-4 col-lg-4" style="max-width: 27%">
 						<div class="user-panel">
 							 <div class="up-item">
                 <i class="flaticon-profile"></i>
@@ -79,16 +79,17 @@
       <%}%>
 		<nav class="main-navbar">
 			<div class="container">
-				<!-- menu -->
+        <!-- menu -->
 				<ul class="main-menu">
                     <li><a href="/">Trang chủ</a></li>
-                    
                     <% for (var i = 0; i < cate.length; i++) { %>
-                      <li><a href="/"><%=cate[i].nameCategory%></a></li>
+                      
+                      <li><a href="/category?idCategory=<%=cate[i].idCategory%>" id="loaisanpham" data-idcate="<%=cate[i].idCategory%>" data-namecate="<%=cate[i].nameCategory%>"><%=cate[i].nameCategory%></a></li>
+                    
                       <% } %>
+                      
                     <li style="float: right; margin-right: -70px;"><a href="/" data-toggle="modal" data-target="#modalRegisterFormDN">Bán hàng cùng Divisima</a></li>
-
-				</ul>
+        </ul>
 			</div>
 		</nav>
     </header>

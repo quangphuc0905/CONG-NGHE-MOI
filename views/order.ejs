@@ -125,6 +125,8 @@
 								<%for(let k =0;k < sps.length;k++){%>
 									<%if(lstSP[h].idProduct== sps[k].idProduct){%>
 										<%var tensp = sps[k].nameProduct%>
+										<%var tenncc = sps[k].nameSupplier%>
+										<%var giasp = sps[k].price*lstSP[h].quantity%>
 										<%if(lstSP[h].status!="Đã hủy"){%>
 											<%tongtien = tongtien + sps[k].price*lstSP[h].quantity%>
 										<%}%>
@@ -135,18 +137,20 @@
 								<form action="/order/cancel" method="POST">
 									<input type="text" value="<%=lstSP[h].order%>" name="order" style="display: none;"/>
 									<input type="text" value="<%=lstSP[h].idOrder%>" name="idOrder" style="display: none;"/>
-								<li class="list-group-item"><%=lstSP[h].quantity%> x <%=tensp%> <%=lstSP[h].order%>
+								<li class="list-group-item"><%=lstSP[h].quantity%> x <%=tensp%> <i style="margin-left:50px; color: #007FF0"> <%=giasp%> VNĐ</i>
 
 									 <button type="submit" style="float: right; background-color: red; color: white;">X</button>
 									  <b style="float: right; margin-right: 40px;"><%=lstSP[h].status%></b>
+									  <p style="margin-right: 40px; float: right;">Cung cấp bởi: <%=tenncc%></p>
 								</li>
 								</form>
 								<%}%>
 								<%if(lstSP[h].status=="Đang giao"){%>
-									<li class="list-group-item"><%=lstSP[h].quantity%> x <%=tensp%> <%=lstSP[h].order%>
+									<li class="list-group-item"><%=lstSP[h].quantity%> x <%=tensp%> <i style="margin-left:50px; color: #007FF0;"> <%=giasp%> VNĐ</i>
 
 										<button type="button" data-toggle="modal" data-target="#myModal" style="float: right; background-color: red; color: white;">X</button>
 										 <b style="float: right; margin-right: 40px;"><%=lstSP[h].status%></b>
+										 <p style="margin-right: 40px; float: right;">Cung cấp bởi: <%=tenncc%></p>
 								   </li>
 								<%}%>
 							<%}%>

@@ -264,6 +264,7 @@ table, th, td {
 
           <input type="number" id="orangeForm-email" name="price" class="form-control validate" required="required">
         </div>
+        
         <div class="md-form mb-5">
             <label data-error="wrong" data-success="right" for="orangeForm-email">Hình ảnh</label>
 
@@ -509,9 +510,9 @@ table, th, td {
     <div class="md-form mb-5">
       <label data-error="wrong" data-success="right" for="orangeForm-email">Trạng thái</label>
       <select class="form-control" name="status" id="trangthai">
-            <option id="aaaa" value="Chờ xử lý"> Chờ xử lý</option>
-            <option value="Đang giao"> Đang giao</option>
-            <option value="Hoàn tất"> Hoàn tất</option>
+            <option> Chờ xử lý</option>
+            <option> Đang giao</option>
+            <option> Hoàn tất</option>
       </select>
 </div>
     <div class="md-form mb-5">
@@ -544,18 +545,27 @@ table, th, td {
         document.getElementById('trangthai').children[0].innerHTML = "Chờ xử lý";
         document.getElementById('trangthai').children[1].innerHTML = "Đang giao";
         document.getElementById('trangthai').children[2].innerHTML = "Hoàn tất";
+        document.getElementById('trangthai').children[0].value = "Chờ xử lý";
+        document.getElementById('trangthai').children[1].value = "Đang giao";
+        document.getElementById('trangthai').children[2].value = "Hoàn tất";
       }
       else if($(this).data('status')=="Đang giao"){
         document.getElementById('trangthai').removeAttribute("disabled");
         document.getElementById('trangthai').children[0].innerHTML = "Đang giao";
         document.getElementById('trangthai').children[1].innerHTML = "Chờ xử lý";
         document.getElementById('trangthai').children[2].innerHTML = "Hoàn tất";
+        document.getElementById('trangthai').children[0].value = "Đang giao";
+        document.getElementById('trangthai').children[1].value = "Chờ xử lý";
+        document.getElementById('trangthai').children[2].value = "Hoàn tất";
       }
       else if($(this).data('status')=="Hoàn tất"){
         document.getElementById('trangthai').removeAttribute("disabled");
         document.getElementById('trangthai').children[0].innerHTML = "Hoàn tất";
         document.getElementById('trangthai').children[2].innerHTML = "Chờ xử lý";
         document.getElementById('trangthai').children[1].innerHTML = "Đang giao";
+        document.getElementById('trangthai').children[0].value = "Hoàn tất";
+        document.getElementById('trangthai').children[2].value = "Chờ xử lý";
+        document.getElementById('trangthai').children[1].value = "Đang giao";
         
       }
       else if($(this).data('status')=="Đã hủy"){
@@ -577,10 +587,14 @@ table, th, td {
       {
         document.getElementById('trangthaisp').children[0].innerHTML = "Đăng bán";
         document.getElementById('trangthaisp').children[1].innerHTML = "Ngừng bán";
+        document.getElementById('trangthaisp').children[0].value = "Đăng bán";
+        document.getElementById('trangthaisp').children[1].value = "Ngừng bán";
       }
       else if($(this).data('sta')=="Ngừng bán"){
         document.getElementById('trangthaisp').children[0].innerHTML = "Ngừng bán";
         document.getElementById('trangthaisp').children[1].innerHTML = "Đăng bán";
+        document.getElementById('trangthaisp').children[0].value = "Ngừng bán";
+        document.getElementById('trangthaisp').children[1].value = "Đăng bán";
       }
   console.log("chinh sua");
 });
@@ -595,10 +609,14 @@ $('.chinhsuaz').click(function(event) {
       {
         document.getElementById('trangthaispz').children[0].innerHTML = "Đăng bán";
         document.getElementById('trangthaispz').children[1].innerHTML = "Ngừng bán";
+        document.getElementById('trangthaispz').children[0].value = "Đăng bán";
+        document.getElementById('trangthaispz').children[1].value = "Ngừng bán";
       }
       else if($(this).data('sta')=="Ngừng bán"){
         document.getElementById('trangthaispz').children[0].innerHTML = "Ngừng bán";
         document.getElementById('trangthaispz').children[1].innerHTML = "Đăng bán";
+        document.getElementById('trangthaispz').children[0].value = "Ngừng bán";
+        document.getElementById('trangthaispz').children[1].value = "Đăng bán";
       }
   console.log("chinh sua");
 });
@@ -615,7 +633,6 @@ function openPage(pageName,elmnt,color) {
   document.getElementById(pageName).style.display = "block";
   elmnt.style.backgroundColor = color;
 }
-
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
 </script>

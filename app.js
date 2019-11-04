@@ -152,7 +152,6 @@ app.post('/signup', async function (req, res) {
     let k =0;
     for(let i = 0; i< arrid.length; i++)
     {
-        
         for(; j<arrid.length;)
         {
           var idProduct = arrid[i];
@@ -174,7 +173,6 @@ app.post('/signup', async function (req, res) {
         j++; t++; k++;
         query.createOrder(keyorder, a.status, idProduct, idSupplier, a.idCustomer, a.idOrder, quantity, a.nameCustomer, a.addressShip, a.numberPhoneCus, date, res)
         keyorder++;
-    }
-
+      }
 });
     

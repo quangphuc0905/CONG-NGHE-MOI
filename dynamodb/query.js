@@ -128,7 +128,7 @@ function searchCategory(idCategory, req, res) {
             console.log(req.session);
             if(sess.user) {
                 console.log("Yes");
-                docClient.scan(params3, function(err, data3){
+                docClient.scan(params1, function(err, data1){
                   if(err){
                     console.log(JSON.stringify(err));
                   }
@@ -138,7 +138,7 @@ function searchCategory(idCategory, req, res) {
                         console.log(JSON.stringify(err));
                       }
                       else{
-                        docClient.scan(params1, function(err, data1){
+                        docClient.query(params, function(err, data){
                           if(err){
                             console.log(JSON.stringify(err));
                           }

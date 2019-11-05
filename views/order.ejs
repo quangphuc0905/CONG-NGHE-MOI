@@ -145,7 +145,7 @@
 								</li>
 								</form>
 								<%}%>
-								<%if(lstSP[h].status=="Đang giao"){%>
+								<%if(lstSP[h].status=="Đang giao" || lstSP[h].status== "Hoàn tất"){%>
 									<li class="list-group-item"><%=lstSP[h].quantity%> x <%=tensp%> <i style="margin-left:50px; color: #007FF0;"> <%=giasp%> VNĐ</i>
 
 										<button type="button" data-toggle="modal" data-target="#myModal" style="float: right; background-color: red; color: white;">X</button>
@@ -186,7 +186,7 @@
 			  <h4 class="modal-title">Thông báo</h4>
 			</div>
 			<div class="modal-body">
-			  <h6>Sản phẩm đang được giao. Không thể hủy.</h6>
+			  <h6>Sản phẩm đã được giao. Không thể hủy.</h6>
 			</div>
 			<div class="modal-footer">
 			  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

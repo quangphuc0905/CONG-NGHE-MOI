@@ -221,11 +221,21 @@
           <input type="text" name="username" class="form-control validate" placeholder="Tên tài khoản" required="required">
         </div>
         <div class="md-form mb-4">
-          <input type="password" name="pass" class="form-control validate" placeholder="Mật khẩu" required="required">
+          <input type="password" id="passs" name="pass" class="form-control validate" placeholder="Mật khẩu" required="required">
         </div>
         <div class="md-form mb-4">
-          <input type="password" name="password" class="form-control validate" placeholder="Nhập lại mật khẩu" required="required">
+          <input type="password" name="password" class="form-control validate" placeholder="Nhập lại mật khẩu" required="required" oninput="checkk(this)">
         </div>
+        <script language='javascript' type='text/javascript'>
+          function checkk(input) {
+              if (input.value != document.getElementById('passs').value) {
+                  input.setCustomValidity('Password Must be Matching.');
+              } else {
+                  // input is valid -- reset the error message
+                  input.setCustomValidity('');
+              }
+          }
+      </script>
         <div class="md-form mb-4">
           <input type="text" name="nameSupplier"  class="form-control validate" placeholder="Họ và tên" required="required">
         </div>
@@ -764,43 +774,6 @@ displayCart();
 
 
 //Kiem tra rang buoc nhap
-$(document).ready(function() {
-        //Khi bàn phím được nhấn và thả ra thì sẽ chạy phương thức này
-        
-        $("#signupDN").validate({
-            rules: {
-                username: {
-                  minlength: 2
-                },
-                address: {
-                    minlength: 2
-                },
-                numberPhone: {
-                  minlength:10,
-                },
-                password :{
-                  minlength:4,
-                  equalTo: "#pass"
-                }
-
-            },
-            messages: {
-              username: {
-                  minlength: "Vui lòng nhập ít nhất 2 kí  tự"
-                },
-                address: {
-                    minlength: "Vui lòng nhập ít nhất 2 kí  tự"
-                },
-                numberPhone: {
-                  minlength:"Số điện thoại không hợp lệ"
-                },
-                password :{
-                  minlength:"Vui lòng nhập ít nhất 4 kí  tự",
-                  equalTo: "Mật khẩu không trùng"
-                }
-            }
-        });
-    });
 
     </script>
 </body>

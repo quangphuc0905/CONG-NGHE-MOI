@@ -16,6 +16,6 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "fs": "0.0.1-security",
-    "webpack": "^4.41.2"
+    "webpack": "^5.75.0"
   }
 }
